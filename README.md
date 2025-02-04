@@ -1,13 +1,12 @@
 # Tutorial de configurações do GetoriiHost 
-### CONFIGURANDO O AMBIENTE
+### Configurando o AMBIENTE
 
 #### Downloads e instalações necessárias:
 - Anaconda Pyhton
--	VSCode
--	PostgreSQL 16+
--	DataBase Client(Pluggin de gerenciamento de BD - extensão)
--	Git
-Tecnologias ultilizadas nesse projeto
+- VSCode
+- PostgreSQL 16+
+- DataBase Client(Pluggin de gerenciamento de BD - extensão)
+- Git
 <div style="display: inline_block;">
     <img src="https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white">
     <img style="width: 28px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png">
@@ -16,8 +15,8 @@ Tecnologias ultilizadas nesse projeto
     <img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white">
 </div>
     
-### Preparando o ambiente (terminal)
-#### No terminal digite:
+### Preparando o ambiente (Terminal)
+- No terminal digite:
 ```
 conda env list
 conda create -n gestoriihost python=3.11.9
@@ -32,7 +31,7 @@ pip install psycopg2-binary
 conda activate gestoriihost
 ```
 -	CTRL+SHIFT+P: Selecionar o interpretador python correspondente ao ambiente virtual chamado gestoriihost
-### Preparando a Aplicação Django
+### Preparando a aplicação Django
 -	Navegar via terminal (cd) até a pasta onde você irá criar o projeto Django, use:
 ```
 django-admin startproject gestoriihost
@@ -134,7 +133,7 @@ STATICFILES_DIRS = [
 NUMBER_GRID_PAGES = 20
 NUMBER_GRID_MODAL = 20
 ```
-### CRIANDO OS APPS Django
+### Criando os **APPS** Django
 Vamos criar os apps responsáveis por autenticar, guardar os códigos reutilizáveis e o que armazenará os cadastros do sistema. Para isso execute:
 ```
 python manage.py startapp core
@@ -155,7 +154,7 @@ INSTALLED_APPS = [
 	"cadastros",
 ] 
 ```
-### CRIANDO O MODELO DE USUÁRIO DO SISTEMA
+### Criando o **MODELO** de usuário do sistema
 > 🐒olhar com o ciniro como a gente pode criar nossas tabelas com base nos nosso projeto de hotelaria, a gente já tem um der ai meio que no pente, dá pra expressar bastante ideia pra ele, acho que ele da um help pa nois
 -	Insira o seguinte o código dentro de models.py no app cadastros
 
@@ -237,7 +236,7 @@ class Usuario(AbstractBaseUser):
     	return self.perfis.filter(nome=perfil_nome).exists()
  
 ```
-### CRIANDO O BANCO DE DADOS
+### Criando o **BANCO DE DADOS**
 -	Verifique se o psql está acessível via terminal como uma variável de ambiente. Isso depende de como está configurado o seu sistema operacional. Se não for o caso, identifique como fazer isso e adicione a variável PATH ao ambiente.
 -	Acesse o psql via terminal com:
 ```
@@ -262,11 +261,11 @@ GRANT ALL PRIVILEGES ON DATABASE bd_gestoriihost TO postgres;
 ```
 \q
 ```
-### ACESSE O BANCO VIA EXTENSÃO VS CODE
+### Acessando **BANCO DE DADOS** pela extensão do *VSCode*
 -	Entre no DB Client e crie uma conexão com o banco de dados preenchendo os campos com os dados condizentes com a string de conexão com o banco de dados.
 -	Visualize o banco.
 
-### GERANDO O BANCO DE DADOS COM BASE NO MODELO
+### Gerando o **BANCO DE DADOS** com base no MODELO
 -	No terminal digite: 
 ```
 python manage.py makemigrations
@@ -285,7 +284,7 @@ AUTHENTICATION_BACKENDS = [
 	'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
 ]
 ```
-### TESTANDO A APLICAÇÃO
+### Testando a aplicação
 ```
 python manage.py runserver
 ```
