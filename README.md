@@ -67,8 +67,10 @@ class NoCacheMiddleware:
 import os
 from django.contrib.messages import constants as messages
 ```
--	Em MIDDLEWARE adicione: 
+-	Em MIDDLEWARE adicione:
+```
 'config.middleware.NoCacheMiddleware',
+```
 -	Altere ROOT_URLCONF = "gestoriihost.urls" para config.urls.
 -	Adicione a seção abaixo após ROOT_URLCONF:
 ```
