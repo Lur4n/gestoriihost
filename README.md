@@ -63,8 +63,10 @@ class NoCacheMiddleware:
 -	 Acesse o arquivo settings.py dentro de config e:
 -	Altere *WSGI_APPLICATION = "gestoriihost.wsgi.application"* para *config.wsgi.application*
 -	Importe os seguintes pacotes no cabeçalho:
+```
 import os
 from django.contrib.messages import constants as messages
+```
 -	Em MIDDLEWARE adicione: 
 'config.middleware.NoCacheMiddleware',
 -	Altere ROOT_URLCONF = "gestoriihost.urls" para config.urls.
@@ -80,7 +82,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 ```
 
--	Em TEMPLATES altere a linha DIRS para: 
+-	Em TEMPLATES altere a linha DIRS para:
+```
 "DIRS": [os.path.join(BASE_DIR, "resources")], #define o caminho da pasta que tera os recursos usados pelos templates
 -	Após a sessão TEMPLATES adicione essa nova seção:
 #URL de redirecionamento apos login
@@ -98,8 +101,7 @@ DATABASES = {
     	'PORT': '5432',
 	}
 }
-
-
+```
 -	Adicione após DATABASES:
 ```
 #Settings for messages
