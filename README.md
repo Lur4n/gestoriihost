@@ -1,7 +1,7 @@
 # Tutorial de configurações do GetoriiHost 
 ### Configurando o AMBIENTE
 
-#### Downloads e instalações necessárias:
+Downloads e instalações necessárias:
 - Anaconda Pyhton
 - VSCode
 - PostgreSQL 16+
