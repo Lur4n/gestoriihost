@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "autenticacao",
     "core",
     "cadastros",
+    "quartos",
 ]
 
 MIDDLEWARE = [
