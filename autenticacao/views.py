@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from autenticacao import urls
 from django.core.mail import EmailMessage
 
+
 # Create your views here.
 def login(request):
     # if request.method == 'POST':
@@ -28,11 +29,11 @@ def login(request):
     #             request.session['departamento_sigla_atual'] = usuario.departamento.sigla
     #             request.session['perfil_atual'] = perfis_usuario.first().nome
     #             request.session['perfis'] = list(usuario.perfis.values_list('nome', flat=True))
-                
+
     #             request.session.set_expiry(14400)
 
     #             messages.success(request, 'Login realizado com sucesso!')
-                
+
     #             if request.session.get('perfil_atual') in {'Administrador', 'Estoquista', 'Vendedor'}:
     #                 return redirect('core:main')
     #         else:
@@ -42,8 +43,13 @@ def login(request):
     #             messages.error(request, 'Senha errada!')
     #         else:
     #             messages.error(request, 'Usuario ou senha invalido!')
-    
-    return render(request, 'login.html')
+
+    return render(request, "login.html")
+
 
 def mostruario(request):
-    return render(request, 'nossos_quartos.html')
+    return render(request, "nossos_quartos.html")
+
+
+def lista_reservas(request):
+    return render(request, "lista_reservas.html")

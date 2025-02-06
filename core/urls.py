@@ -1,6 +1,9 @@
 from django.urls import path, include
+from . import views
+
+app_name = "core"
 
 urlpatterns = [
-    path('', include('autenticacao.urls')),
-    # path("admin/", admin.site.urls),
+    path("main", views.main, name="main"),
+    path("reservas/", views.lista_reservas, name="lista_reservas"),
 ]
