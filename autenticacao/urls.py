@@ -6,4 +6,5 @@ app_name = "autenticacao"
 urlpatterns = [
     # path("", views.login, name="login"),
     path("login/", views.login, name="login"),
+    path("lista_reservas/", views.lista_reservas, name="lista_reservas"),
 ]
