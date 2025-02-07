@@ -3,7 +3,8 @@
 {% block conteudo %}
 
 <div class="container mt-2 p-4 w-75">
-  <h1 class="display-weight-bold">Reservas</h1>    
+  <!-- <h1 class="display-weight-bold">Reservas</h1>     -->
+  <h1 class="display-weight-bold">{{ nome }}</h1>    
   <div class="form-group row p-2 d-flex align-items-center">
   <!-- Div alinhada à esquerda -->
   <div class="col-4 d-flex align-items-center">
@@ -21,23 +22,23 @@
   <div class="mt-3 container p-4 d-flex align-items-center">
         <form class="row g-3">
             <div class="col-md-3">
-              <label for="inputEmail4" class="form-label">n° Quarto</label>
+              <label for="inputEmail4" class="form-label">Número do Quarto</label>
               <input type="email" class="form-control shadow h-75" id="inputEmail4" >
             </div>
             <div class="col-md-9 mb-3">
               <div class="row g-2">
                 <div class="col-md-6">
-                  <label for="inputPassword4" class="form-label">Password</label>
+                  <label for="inputPassword4" class="form-label">Nome</label>
                   <input type="password" class="form-control shadow" id="inputPassword4">
                   <br>
-                  <label for="inputPassword4" class="form-label">Password</label>
+                  <label for="inputPassword4" class="form-label">CPF</label>
                   <input type="password" class="form-control shadow" id="inputPassword4">
                 </div>
                 <div class="col-md-6">
-                  <label for="inputPassword4" class="form-label">Password</label>
+                  <label for="inputPassword4" class="form-label">Código da reserva</label>
                   <input type="password" class="form-control shadow" id="inputPassword4">
                   <br>
-                  <label for="inputPassword4" class="form-label">Password</label>
+                  <label for="inputPassword4" class="form-label">Telefone</label>
                   <input type="password" class="form-control shadow" id="inputPassword4">
                 </div>
               </div>
@@ -55,13 +56,13 @@
               </select> -->
             </div>
             <div class="col-md-2">
-              <label for="inputZip" class="form-label">Zip</label>
+              <label for="inputZip" class="form-label">Diárias</label>
               <input type="text" class="form-control shadow" id="inputZip">
             </div>
             <div class="col-md-8 mt-3">
               <fieldset>
                 <legend>Comanda</legend>
-                <div class="container text-center h-75">
+                <div class="container text-center h-75"">
                   <table class="table table-hover">
                     <th>Produto</th>
                     <th>Qtd</th>
