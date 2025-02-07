@@ -1,0 +1,26 @@
+.logo{
+    width: 158px; 
+    height: 35px; 
+    color: rgb(69, 68, 68);
+    background-color: rgb(195, 209, 236);
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 5px;   
+}
+.formlogin{
+    width: 100vh;
+}
+.gestorii-input{
+   border-radius: 0; 
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
