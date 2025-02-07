@@ -9,8 +9,11 @@ from django.core.mail import EmailMessage
 
 # Create your views here.
 def login(request):
-    # if request.method == 'POST':
-    #     email = request.POST.get('txtEmail')
+    email = request.POST.get('txtNome')
+    if  email == 'adm':
+        messages.success(request, 'Deu boa de entrar na view de Reservas pela login')
+        return render(request, "lista_reservas.html")
+        # email = request.POST.get('txtEmail')
     #     senha = request.POST.get('txtSenha')
     #     perfil_id = request.POST.get('slcPerfil')
 
@@ -44,12 +47,12 @@ def login(request):
     #         else:
     #             messages.error(request, 'Usuario ou senha invalido!')
 
-    return render(request, "login.html")
+    return render(request, "login.html", {email: "geral"})
 
 
 def mostruario(request):
     return render(request, "nossos_quartos.html")
 
-
 def lista_reservas(request):
+    messages.success(request, 'Deu boa de entrar na view de Reservas')
     return render(request, "lista_reservas.html")
