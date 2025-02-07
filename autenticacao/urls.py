@@ -5,5 +5,5 @@ app_name = "autenticacao"
 
 urlpatterns = [
     # path("", views.login, name="login"),
-    path("login/", views.login, name="login"),
+    path("", views.login, name="login"),
 ]

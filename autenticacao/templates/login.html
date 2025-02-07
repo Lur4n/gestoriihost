@@ -4,15 +4,23 @@
 
     <div class="container text-center mt-2 p-4">
         <div class="row">
-            <h1>Login</h1>
+            <h1>Login - Branch caca</h1>
             <p>Faça seu login para começar a gerenciar o Hotel!</p>
+            <!-- {% if messages%}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{message.tags}}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {%endif%} -->
         </div>
         <div class="d-flex justify-content-center align-items-center">
             <div class="container text-center formlogin w-50">
-                <form class=" p-4 rounded bg-transparent">
+                <form class=" p-4 rounded bg-transparent" action="{% url 'autenticacao:login' %}" method="POST">
+                    {% csrf_token %}
                     <div class="mb-3 text-start">
                         <label for="staticEmail2" class="form-label">Nome</label>
-                        <input type="text" class="form-control border border-1 border-dark gestorii-input shadow" id="staticEmail2" placeholder="Insira seu email">
+                        <input name="txtNome" type="text" class="form-control border border-1 border-dark gestorii-input shadow" id="staticEmail2" placeholder="Insira seu email">
                     </div>
                     <div class="mb-3 text-start">
                         <label for="inputPassword2" class="form-label">Senha</label>
