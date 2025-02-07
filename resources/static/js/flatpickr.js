@@ -9,9 +9,3 @@ const dataFormatada = `${dia}-${mes}-${ano}`;
 
 // Define o valor do input como a data atual
 document.getElementById("txtDatepicker").value = dataFormatada;
-
-flatpickr("#txtDatepicker", {
-    dateFormat: "d/m/Y",
-    disableMobile: true, // Impede a abertura do calendário nativo no celular
-    locale: "pt"
-});
