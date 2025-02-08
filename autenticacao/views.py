@@ -1,29 +1,19 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from cadastros.models import Usuario
-from django.contrib import messages
 from django.http import JsonResponse
-from autenticacao import urls
-from django.core.mail import EmailMessage
-
 
 # Create your views here.
 def login(request):
     email = request.POST.get('txtNome')
-    if  email == 'adm':
-        messages.success(request, 'Deu boa de entrar na view de Reservas pela login')
-        return render(request, "lista_reservas.html")
-        # email = request.POST.get('txtEmail')
-    #     senha = request.POST.get('txtSenha')
-    #     perfil_id = request.POST.get('slcPerfil')
+    if request.method == 'POST':
+        if  email == 'adm':
 
-    #     usuario = authenticate(request, username=email, password=senha)
+            messages.success(request, 'Login realizado com sucesso!')
 
-    #     if(usuario is not None and perfil_id):
-    #         perfis_usuario = usuario.perfis.filter(id=perfil_id)
-    #         if perfis_usuario.exists():
-    #             request.session.flush()
-    #             auth_login(request, usuario)
+            return redirect('reservas:lista_reservas')
+
 
     #             request.session['id_atual'] = usuario.id
     #             request.session['email_atual'] = usuario.email
@@ -47,7 +37,7 @@ def login(request):
     #         else:
     #             messages.error(request, 'Usuario ou senha invalido!')
 
-    return render(request, "login.html", {email: "geral"})
+    return render(request, "login.html")
 
 
 def mostruario(request):

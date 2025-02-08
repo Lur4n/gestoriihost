@@ -3,11 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-@login_required
-def lista_reservas(request):
-    messages.success(request, "Entrei na Login!")
-    # return render(request, "lista_reservas.html")
-    return redirect("lista_reservas")
 
-def login(request):
-    return render(request, "login.html")
+# @login_required
+def lista_reservas(request):
+    return render(request, "lista_reservas.html")

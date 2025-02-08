@@ -5,5 +5,4 @@ app_name = "core"
 
 urlpatterns = [
     path("main", views.main, name="main"),
-    path("login/", views.login, name="login"),
 ]

@@ -57,7 +57,6 @@ class Usuario(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
     perfis = models.ManyToManyField(Perfil)
-
     objects = UsuarioManager()
 
     USERNAME_FIELD = "email"
