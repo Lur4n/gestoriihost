@@ -29,9 +29,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "autenticacao",
     "core",
-    "cadastros",
-    "quartos",
-    "reservas",
+    # "cadastros",
+    # "reservas",
 ]
 
 MIDDLEWARE = [
@@ -49,19 +48,19 @@ ROOT_URLCONF = "config.urls"
 
 # integra com o sistema de auth padrao do Django
 
-AUTH_USER_MODEL = "cadastros.Usuario"
+#integra com o sistema de auth padrao do Django
+#AUTH_USER_MODEL = 'cadastros.Usuario' 
 AUTHENTICATION_BACKENDS = [
-    "cadastros.backends.EmailBackend",  # backend de autenticacao personalizado
-    "django.contrib.auth.backends.ModelBackend",  # backend de autenticacao padrao
+    #'cadastros.backends.EmailBackend',  #backend de autenticacao personalizado
+    'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
 ]
+
 
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(BASE_DIR, "resources")
-        ],  # define o caminho da pasta que terá recursos usados pelos templates
+        "DIRS": [os.path.join(BASE_DIR, "resources")],  # define recursos usados pelos templates
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -74,10 +73,10 @@ TEMPLATES = [
     },
 ]
 
-# URL de redirecionamento apos login
-LOGIN_REDIRECT_URL = "core:main"
-LOGOUT_REDIRECT_URL = "autenticacao:login"
-LOGIN_URL = "autenticacao:login"
+#URL de redirecionamento apos login
+LOGIN_REDIRECT_URL = 'core:main'
+LOGOUT_REDIRECT_URL = 'autenticacao:login'
+LOGIN_URL = 'autenticacao:login'
 
 
 WSGI_APPLICATION = "config.wsgi.application"
@@ -99,12 +98,13 @@ DATABASES = {
 
 # Settings for messages
 MESSAGE_TAGS = {
-    messages.DEBUG: "debug",
-    messages.INFO: "info",
-    messages.SUCCESS: "success",
-    messages.WARNING: "warning",
-    messages.ERROR: "danger",
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
 }
+
 
 
 # Password validation

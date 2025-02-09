@@ -1,0 +1,156 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block conteudo %}
+
+<br>
+
+<div class="container">
+    <div class="form-group row align-items-center mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-weight-bold text-primary">Cadastro de Departamentos</h1>
+            <hr class="mt-2 mb-3 border-primary">
+
+        </div>
+    </div>
+
+    <fieldset class="fieldset-custom">
+        <legend>
+            {% if page_obj.paginator.count == 0 %}
+                Nenhum registro encontrado
+            {% elif page_obj.paginator.count == 1 %}
+                1 Registro encontrado
+            {% else %}
+                {{page_obj.paginator.count}} registros encontrados
+            {%endif%}
+        </legend>
+
+        <div class="form-grop row align-items-center">
+            <div class="col-auto">
+                <img src='{% static "img/search.png" %}' width="20" height="20px" alt="Pequisar">
+            </div>
+            <div class="text-left">
+
+            </div>
+            <div class="text-left">
+                <label for="txtBuscaNome" class="col-form-label">Pesquisar por nome</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" id="txtBuscaNome" placeholder="Digite o nome do departamento" value="{{ query }}">
+            </div>
+        </div>
+
+        <div id="departamentos-table">
+            {% include 'departamentos_tables.html' %}
+        </div>
+    </fieldset>
+
+    <hr>
+
+    <fieldset class="fieldset-custom">
+        <legend id="formLegend">Novo Departamento</legend>
+        <form class="needs-validation" method="POST" action="{% url 'cadastros:departamentos'%}" novalidate>
+            
+            {% csrf_token %}
+            
+            <!-- codigo-->
+            <input type="hidden" name="txtId" id="txtId" value="">
+            
+            <!-- nome -->
+            <div class="form-group row row-align-items-center has-validation">
+                <label for="txtNome" class="col-sm-2 col-form-label text-left">Nome:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="txtNome" id="txtNome" value="" placeholder="Digite o nome" required>
+                </div>
+                <div class="invalid-feedback text-left">
+                    O nome é obrigatório.
+                </div>
+            </div>
+
+            <!-- sigla -->
+            <div class="form-group row row-align-items-center has-validation">
+                <label for="txtSigla" class="col-sm-2 col-form-label text-left">Sigla:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="txtSigla" id="txtSigla" value="" placeholder="Digite o sigla" required maxlength="5">
+                </div>
+                <div class="invalid-feedback text-left">
+                    A sigla é obrigatória.
+                </div>
+            </div>
+
+            <!-- ações -->
+            <div class="form-group row row-align-items-center">
+                <div class="col-sm-12 text-right">
+                    <a href="{% url 'cadastros:departamentos' %}" class="btn btn-info" style="display: none;" id="btnNovoDepartamento">Voltar ao modo de inclusão
+                        <img src="{% static 'img/create.png' %}" alt="icone-voltar" width="20px" height="20px">
+                    </a>
+                    <button type="submit" class="btn btn-primary" name="btnAcao" id="btnAcao" value="novo_departamento">Salvar novo departamento</button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+
+    <script>
+        // funcao para carregar os dados do departamento no formulario
+        function carregaDadosDepartamento(departamento_id){
+            $.ajax({
+                url: '{% url "cadastros:obter_departamento_por_id" %}',
+                data: {
+                    'departamento_id': departamento_id
+                },
+                dataType: 'json',
+                success: function(departamento_dados){
+                    $('#txtId').val(departamento_dados.id);
+                    $('#txtNome').val(departamento_dados.nome);
+                    $('#txtSigla').val(departamento_dados.sigla);
+
+                    $('#formLegend').text('Alterar Departamento');
+                    $('#btnAcao').text('Alterar Departamento').val('alterar_departamento');
+                    $('#btnNovoDepartamento').show();
+                }
+            })
+        }
+
+        //click na linha do grid
+
+        function clickNoGrid(){
+            $('.departamento-row').click( function(){
+                $('.departamento-row').removeClass('table-primary table-bordered');
+                $(this).addClass('table-primary table-bordered');
+
+                var departamento_id = $(this).data('id');
+                carregaDadosDepartamento(departamento_id);
+            });
+        }
+
+
+        // Funcao que carrega as funcoes e eventos da pagina
+        $(document).ready(function(){
+            
+            //anexa o evento de clica ao grid
+            clickNoGrid();
+
+            (() => {
+            'use strict'
+            //carrega os formularios do bootstrap que tem validacao customizada
+            const forms = document.querySelectorAll('.needs-validation')
+            //loop nesses formularios para evitar o envio do formulário se ele nao for valido
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })();
+        });
+
+        <!-- scripts especificos do cadastro de departamento, depois adicione na static pra ficar mais profissional -->
+    </script>
+
+    CONTINUAR DAQUI
+</div>
+
+{% endblock %}

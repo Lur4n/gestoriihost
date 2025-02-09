@@ -6,4 +6,5 @@ from django.contrib.auth.decorators import login_required
 
 # @login_required
 def lista_reservas(request):
-    return render(request, "lista_reservas.html")
+    return redirect('reservas:lista_reservas')
+    # return render(request, "lista_reservas.html")

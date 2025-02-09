@@ -24,3 +24,6 @@
     opacity: 1;
     transform: translateY(0);
 }
+.toast-succes{
+    color: red;
+}
