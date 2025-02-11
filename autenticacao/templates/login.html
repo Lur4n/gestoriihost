@@ -18,12 +18,12 @@
             <div class="container text-center formlogin w-50">
                 <form class=" p-4 rounded bg-transparent" action="{% url 'autenticacao:login' %}" method="POST">
                     {% csrf_token %}
-                    <div class="mb-3 text-start form-group">
+                    <div class="text-start form-group">
                         <label for="txtEmail" class="form-label">Nome</label>
                         <input type="email" class="form-control border border-1 border-dark gestorii-input shadow" id="txtEmail" name="txtEmail" placeholder="Insira seu email">
                         <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div>
                     </div>  
-                    <div class="mb-3 text-start form-group hidden-group" id="divSenha">
+                    <div class="mb-5 text-start form-group hidden-group" id="divSenha">
                         <label for="txtSenha" class="form-label">Senha</label>
                         <input type="password" class="form-control border border-1 border-dark gestorii-input shadow" id="txtSenha" name="txtSenha" autocomplete="new-password">
                     </div>
@@ -67,12 +67,12 @@
                                         });
                                         $('#divPerfil').removeClass('hidden-group');
                                         $('#divSenha').removeClass('hidden-group');
-                                        $('#divEmailError').text('Email Disponível!').removeClass('fade-in').addClass('show');
+                                        $('#divEmailError').text('Email Disponível!').addClass('show').css('color','green');
                                     } else {
                                         toastr.error("Nenhum perfil encontrado para este e-mail.", "Erro");
                                     }
                                 } else {
-                                    $('#divEmailError').text('Email está indisponível').addClass('show');
+                                    $('#divEmailError').text('Email está indisponível').addClass('show').css('color','red');
                                 }
                             }
                         });
