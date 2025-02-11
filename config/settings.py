@@ -22,14 +22,15 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "autenticacao",
     "core",
-    # "cadastros",
+    "cadastros",
+    "sistema",
     # "reservas",
 ]
 
@@ -49,11 +50,12 @@ ROOT_URLCONF = "config.urls"
 # integra com o sistema de auth padrao do Django
 
 #integra com o sistema de auth padrao do Django
-#AUTH_USER_MODEL = 'cadastros.Usuario' 
+AUTH_USER_MODEL = 'cadastros.Usuario' 
 AUTHENTICATION_BACKENDS = [
-    #'cadastros.backends.EmailBackend',  #backend de autenticacao personalizado
+    'cadastros.backends.EmailBackend',  #backend de autenticacao personalizado
     'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
 ]
+# AUTH_USER_MODEL = 'sistema.CustomUser'
 
 
 
@@ -158,5 +160,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Configurações de variáveis globais
-NUMBER_GRID_PAGES = 20
-NUMBER_GRID_MODAL = 20
+NUMBER_GRID_PAGES = 3
+NUMBER_GRID_MODAL = 3

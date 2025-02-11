@@ -21,7 +21,7 @@ class Departamento(models.Model):
 
 class Perfil(models.Model):
     nome = models.CharField(max_length=100, unique=True)
-
+    
     def delete(self, *args, **kwargs):
         if self.usuario_set.exists():
             raise ProtectedError(

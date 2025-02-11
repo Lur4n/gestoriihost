@@ -12,7 +12,7 @@ from django.db.models import (
     Sum,
     ExpressionWrapper,
 )
-# from .models import Usuario, Perfil, Departamento
+from .models import Usuario, Perfil, Departamento
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
