@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "core",
     "cadastros",
     "sistema",
-    # "reservas",
+    "reservas",
 ]
 
 MIDDLEWARE = [

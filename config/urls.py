@@ -6,5 +6,6 @@ urlpatterns = [
     path("", include("autenticacao.urls")),
     path("core/", include("core.urls")),
     path("cadastros/", include("cadastros.urls")),
+    path('reservas/', include("reservas.urls")),
     # path("reservas/", include("reservas.urls")),
 ]

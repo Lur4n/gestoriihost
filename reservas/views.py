@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-# @login_required
+def reservas(request):
+    return render(request, 'index.html')
+
 def lista_reservas(request):
     return redirect('reservas:lista_reservas')
     # return render(request, "lista_reservas.html")
