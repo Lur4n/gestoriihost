@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.db import connection, transaction
-from cadastros.models import Departamento, Perfil, Usuario
+from cadastros.models import Perfil, Usuario
 
 
 class Command(BaseCommand):
@@ -9,6 +9,7 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         cursor = connection.cursor()
+        
         # obtem apenas as tabelas do aplicativo 'cadastros'
         app_labels = ["cadastros"]
         tables = [
@@ -45,19 +46,13 @@ class Command(BaseCommand):
             for table in tables:
                 cursor.execute(f'ALTER TABLE "{table}" ENABLE TRIGGER ALL;')
 
-        # adiciona o departamento geral
-        departamento = Departamento(id=1, nome="Geral", sigla="GERAL")
-        departamento.save(force_insert=True)
 
         # cria os perfis necessarios
         perfil_admin = Perfil(id=1, nome="Administrador")
         perfil_admin.save(force_insert=True)
 
-        perfil_estoquista = Perfil(id=2, nome="Estoquista")
-        perfil_estoquista.save(force_insert=True)
-
-        perfil_vendedor = Perfil(id=3, nome="Vendedor")
-        perfil_vendedor.save(force_insert=True)
+        perfil_funcionario =Perfil(id=2, nome="Funcionario")
+        perfil_funcionario.save(force_insert=True)
 
         # adiciona o superusuario
         if not Usuario.objects.filter(email="adm@gmail.com").exists():
@@ -66,7 +61,6 @@ class Command(BaseCommand):
                 email="adm@gmail.com",
                 nome="Administrador",
                 is_admin=True,
-                departamento=departamento,
             )
             usuario.set_password("123456")
             usuario.save(force_insert=True)

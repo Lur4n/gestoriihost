@@ -53,7 +53,7 @@ ROOT_URLCONF = "config.urls"
 AUTH_USER_MODEL = 'cadastros.Usuario' 
 AUTHENTICATION_BACKENDS = [
     'cadastros.backends.EmailBackend',  #backend de autenticacao personalizado
-    'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
+    # 'django.contrib.auth.backends.ModelBackend',  #backend de autenticacao padrao
 ]
 # AUTH_USER_MODEL = 'sistema.CustomUser'
 

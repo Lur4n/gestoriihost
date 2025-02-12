@@ -2,23 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.deletion import ProtectedError
 
-
-class Departamento(models.Model):
-    nome = models.CharField(max_length=500)
-    sigla = models.CharField(max_length=30)
-
-    def delete(self, *args, **kwargs):
-        if self.usuario_set.exists():
-            raise ProtectedError(
-                "Não é possível excluir este departamento, pois ele possui usuarios vinculados.",
-                self,
-            )
-        super().delete(*args, **kwargs)
-
-    def __str__(self):
-        return self.nome
-
-
 class Perfil(models.Model):
     nome = models.CharField(max_length=100, unique=True)
     
@@ -55,10 +38,9 @@ class Usuario(AbstractBaseUser):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    departamento = models.ForeignKey(Departamento, on_delete=models.PROTECT)
     perfis = models.ManyToManyField(Perfil)
     objects = UsuarioManager()
-
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["nome"]
 
@@ -77,3 +59,43 @@ class Usuario(AbstractBaseUser):
 
     def tem_perfil(self, perfil_nome):
         return self.perfis.filter(nome=perfil_nome).exists()
+
+class Hospede(models.Model):
+    empresa = models.CharField(max_length=50, blank=True, null=True)
+    nome = models.CharField(max_length=50)
+    cpf = models.CharField(max_length=14, unique=True)
+    telefone = models.CharField(max_length=11)
+
+    
+    def __str__(self):
+        return self.nome
+
+
+class Quarto(models.Model):
+    num_quarto = models.IntegerField(primary_key=True)
+    ranking = models.IntegerField()
+    descricao = models.TextField(blank=True, null=True)
+    preco = models.FloatField()
+    capacidade = models.IntegerField()
+    disponibilidade = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Quarto {self.num_quarto}"
+
+class Reserva(models.Model):
+    # Campos
+    check_in = models.DateField()
+    check_out = models.DateField()
+    diaria = models.IntegerField()
+    observacoes = models.TextField(blank=True, null=True)
+    total = models.FloatField()
+    pago = models.BooleanField(default=False)
+    quant_pessoas = models.IntegerField()
+    
+    # ForeignKeys 
+    id_hospede = models.ForeignKey(Hospede, on_delete=models.CASCADE)
+    num_quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE)   
+
+    def __str__(self):
+        return f"Reserva {self.id} - {self.id_hospede.nome}"
+     

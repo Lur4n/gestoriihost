@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 from django.db import connection, transaction
-from cadastros.models import Departamento, Perfil, Usuario
+from cadastros.models import Perfil, Usuario
 
 
 class Command(BaseCommand):

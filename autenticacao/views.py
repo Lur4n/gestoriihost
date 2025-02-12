@@ -22,14 +22,15 @@ def login(request):
                 #cria a sessao do usuario
                 auth_login(request, usuario)
                 
+                request.session['is_login'] = False
+                request.session['is_admin'] = usuario.is_admin
+                print(request.session['is_admin'])
                 request.session['id_perfil'] = perfil_id
                 request.session['id_atual'] = usuario.id
-                request.session['email_atual'] = usuario.email
-                request.session['departamento_id_atual'] = usuario.departamento.id
-                request.session['departamento_nome_atual'] = usuario.departamento.nome
-                request.session['departamento_sigla_atual'] = usuario.departamento.sigla                      
+                request.session['email_atual'] = usuario.email                    
                 request.session['perfil_atual'] = perfis_usuario.first().nome                
                 request.session['perfis'] = list(usuario.perfis.values_list('nome', flat=True))
+                print(request.session['perfis'])
                 
                 #configura sessao para expirar em 4 horas
                 request.session.set_expiry(14400)
@@ -37,7 +38,7 @@ def login(request):
                 messages.success(request, 'Login realizado com sucesso!')
                 
                 #no futuro iremos separar em diferentes paginas
-                if request.session.get('perfil_atual') in {'Administrador', 'Estoquista', 'Vendedor'}:
+                if request.session.get('perfil_atual') in {'Administrador', 'Funcionario'}:
                     return redirect('core:main')
                 
             else:

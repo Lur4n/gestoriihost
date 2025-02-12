@@ -13,10 +13,14 @@
   <!-- Div alinhada à direita -->
   <div class="col-8 d-flex align-items-center justify-content-end">
     <img src='{% static "img/search.png" %}' width="20" height="20" alt="Pesquisar">
-    <label for="txtDatepicker" class="col-form-label ms-2">Pesquisar data</label>
-    <input type="text" class="form-control ms-2" id="txtDatepicker" placeholder="Selecione uma data" value="{{ query }}" style="width: 150px;">
+    <label for="txtNomePesq" class="col-form-label ms-2">Pesquisar</label>
+    <input type="text" class="form-control ms-2" id="txtNomePesq" placeholder="Nome" value"" style="width: 150px;">
   </div>
 
+  <!-- Div alinhada à direita -->
+  <div class="col-12 d-flex align-items-center justify-content-end">
+    <input type="text" class="form-control ms-2" id="txtNumPesq" placeholder="Quarto" value"" style="width: 150px;">
+  </div>
     <!-- Essa parte tem que ir pra uma partial, ou melhor block conteudo -->
   <div class="mt-3 container p-4 d-flex align-items-center">
         <form class="row g-3">
@@ -43,16 +47,12 @@
               </div>
             </div>
             <div class="col-md-5">
-                <label for="inputCity" class="form-label">Check-in</label>
-                <input type="text" class="form-select shadow" id="txtDatepicker" placeholder="Selecione uma data" value="{{ query }}"">
+                <label for="dateCheckin" class="form-label">Check-in</label>
+                <input name="dateCheckin" type="text" class="form-select shadow" id="txtDatepicker" placeholder="Selecione uma data" value="">
             </div>
             <div class="col-md-5">
-                <label for="inputState" class="form-label">Check-out</label>
-                <input type="text" class="form-select shadow" id="txtDatepicker" placeholder="Selecione uma data" value="{{ query }}"">
-              <!-- <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select> -->
+                <label for="dateCheckout" class="form-label">Check-out</label>
+                <input name="dateCheckout" type="text" class="form-select shadow" id="txtDatepicker" placeholder="Selecione uma data" value="">
             </div>
             <div class="col-md-2">
               <label for="inputZip" class="form-label">Diárias</label>
@@ -107,16 +107,20 @@
                 <option>...</option>
               </select> -->
             </div>
-            <div class="col-12">
+            <div class="col-12 d-flex justify-content-end">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="gridCheck">
                 <label class="form-check-label" for="gridCheck">
-                  Check me out
+                  Selecionar
                 </label>
               </div>
             </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Sign in</button>
+              <!-- Div alinhada à direita -->
+            <div class="col-12 d-flex sticky-bottom align-items-center justify-content-end">
+              <button type="submit" class="btn btn-success">Salvar alterações</button>
+            </div>
+            <div class="col-12 d-flex sticky-bottom align-items-center justify-content-end">
+              <button type="submit" class="btn btn-danger">Deletar</button>
             </div>
           </form>
     </div>
