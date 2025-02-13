@@ -91,6 +91,7 @@ class Reserva(models.Model):
     total = models.FloatField(null=True)
     pago = models.BooleanField(default=False, null=True)
     quant_pessoas = models.IntegerField(null=True)
+    is_active = models.BooleanField(default=True)
     
     # ForeignKeys 
     id_hospede = models.ForeignKey(Hospede, on_delete=models.CASCADE)

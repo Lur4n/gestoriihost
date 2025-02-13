@@ -24,7 +24,6 @@
   </div>
   
 {% for quarto in quarto_lista %}
-        {% comment %} <li>Quarto {{ quarto.num_quarto }}</li> {% endcomment %}
     {% empty %}
         <li>Não há quartos disponíveis.</li>
     {% endfor %}
@@ -32,19 +31,19 @@
   <div class="row text-center mt-3">
   {% for quarto in quarto_lista %}
       {% if quarto.disponibilidade == 1 %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-verde id_quarto" data-id="{{quarto.num_quarto}}">
+      <div class="col shadow ms-3 me-3 mb-2 cartao-verde id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
         <p class="display-4">{{quarto.num_quarto}}</p>
       </div>
       {% elif quarto.disponibilidade == 2 %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-vermelho id_quarto" data-id="{{quarto.num_quarto}}">
+      <div class="col shadow ms-3 me-3 mb-2 cartao-vermelho id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
         <p class="display-4" >{{quarto.num_quarto}}</p>
       </div>
       {% else %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-azul id_quarto" data-id="{{quarto.num_quarto}}">
+      <div class="col shadow ms-3 me-3 mb-2 cartao-azul id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
         <p class="display-4" >{{quarto.num_quarto}}</p>
       </div>
       {% endif %}
-      {% if forloop.counter|divisibleby:5 or forloop.last %}
+      {% if forloop.counter|divisibleby:4 or forloop.last %}
         </div> 
         <div class="row text-center mt-3">
       {% endif %}
@@ -57,12 +56,33 @@
 <script>
   $('.id_quarto').click(function(){
     var num_quarto = $(this).data('id');
-    var form = $('<form action="{% url 'reservas:index' %}" method="POST">' +
-                 '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
-                 '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
-                 '</form>');
-    $('body').append(form);
-    form.submit();
+    var disponibilidade = $(this).data('disp');
+    if(disponibilidade==1){
+      var form = $('<form action="{% url 'core:main' %}" method="POST">' +
+         '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
+         '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
+      '</form>');
+
+      $('body').append(form);
+      form.submit();
+    }else if(disponibilidade==2){
+      var form = $('<form action="{% url 'reservas:index' %}" method="POST">' +
+         '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
+         '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
+      '</form>');
+
+      $('body').append(form);
+      form.submit();
+    }else{
+      var form = $('<form action="{% url 'core:main' %}" method="POST">' +
+         '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
+         '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
+      '</form>');
+
+      $('body').append(form);
+      form.submit();
+    }
+    
   });
 </script>
 
