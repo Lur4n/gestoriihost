@@ -1,3 +1,8 @@
+/* body {
+    background-color: rgba(17, 17, 17, 0.736); /* Isso vai mudar o fundo da página para azul claro
+    color: aliceblue;
+} */
+
 .logo{
     width: 158px; 
     height: 35px; 
@@ -33,6 +38,45 @@
     opacity: 1;
     transform: translateX(0);
 }
-.toast-succes{
-    color: red;
+
+.cartao-vermelho{
+    background-color: rgb(255, 80, 80);
+    width: 100px;
+    height: 150px;
+    border-radius: 6px;
 }
+.cartao-verde{
+    background-color: rgb(80, 255, 133);
+    width: 100px;
+    height: 150px;
+    border-radius: 6px;
+}
+.cartao-azul{
+    background-color: rgb(80, 165, 255);
+    width: 100px;
+    height: 150px;
+    border-radius: 6px;
+}
+.legenda-cartao-vermelho{
+    background-color: rgb(255, 80, 80);
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+}
+.legenda-cartao-verde{
+    background-color: rgb(80, 255, 133);
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+}
+.legenda-cartao-azul{
+    background-color: rgb(80, 165, 255);
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+}
+
+.azul{
+   background-color: rgb(80, 165, 255);
+}
+

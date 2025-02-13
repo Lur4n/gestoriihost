@@ -3,37 +3,67 @@
 {% block conteudo %}
 
 <div class="container mt-2 p-4 w-75">
-  <h1 class="display-weight-bold">Home</h1> 
+  <h1 class="display-5 font-weight-bold">Home</h1>
+  <hr>
+  <div class="container ">
+    <div class="row mb-5 ">
+      <div class="d-flex justify-content-end">
+        <div class="col-auto ms-3">Disponivel</div>
+        <div class="col-1 ms-2 me-2 legenda-cartao-verde"></div>
 
-  <h6>O cliente gostaria de uma disposição parecida com a que esta desenhada nao figma, porem a ideia de menu lateral me aflinge um pouco pois pode demanadar tempo de desenvolvimento e o foco do projeto agora tem que ser o backend</h6>
-  <br>
-  <br>
-  <h5>Tipo assim:</h5>
-  <br>
-  <div class="container text-center">
-    <img/creativecommons.png src='{% static "img/layoutsHome.png" %}'style="width: 450px;">
+        <div class="col-auto ms-3">Ocupado</div>
+        <div class="col-1 ms-2 me-2 legenda-cartao-vermelho"></div>
+
+        <div class="col-auto ms-3">Limpeza</div>
+        <div class="col-1 ms-2 me-2 legenda-cartao-azul"></div>
+
+        <div class="col-auto ms-3">Manutenção</div>
+        <div class="col-1 ms-2 me-2 legenda-cartao-azul"></div>
+      </div>
+    </div>
   </div>
-  <br>
-  <h5>O cliente disse que gostaria que cada card desse representasse um quarto e as cores fossem relacionadas com a disponibilidade dos quartos</h5>
-  <br>
-  <br>
-  <table class="table table-hover text-center">
-    <th>Cor</th>
-    <th>Disponibilidade</th>
-    <tr>
-      <td>Azul</td>
-      <td>Ocupado</td>
-    </tr>
-    <tr>
-      <td>Verde</td>
-      <td>Disponivel</td>
-    </tr>
-    <tr>
-      <td>Vermelho</td>
-      <td>Manutenção</td>
-    </tr>
-    
-  </table>
-</div>
+  
+{% for quarto in quarto_lista %}
+        {% comment %} <li>Quarto {{ quarto.num_quarto }}</li> {% endcomment %}
+    {% empty %}
+        <li>Não há quartos disponíveis.</li>
+    {% endfor %}
+
+  <div class="row text-center mt-3">
+  {% for quarto in quarto_lista %}
+      {% if quarto.disponibilidade == 1 %}
+      <div class="col shadow ms-3 me-3 mb-2 cartao-verde id_quarto" data-id="{{quarto.num_quarto}}">
+        <p class="display-4">{{quarto.num_quarto}}</p>
+      </div>
+      {% elif quarto.disponibilidade == 2 %}
+      <div class="col shadow ms-3 me-3 mb-2 cartao-vermelho id_quarto" data-id="{{quarto.num_quarto}}">
+        <p class="display-4" >{{quarto.num_quarto}}</p>
+      </div>
+      {% else %}
+      <div class="col shadow ms-3 me-3 mb-2 cartao-azul id_quarto" data-id="{{quarto.num_quarto}}">
+        <p class="display-4" >{{quarto.num_quarto}}</p>
+      </div>
+      {% endif %}
+      {% if forloop.counter|divisibleby:5 or forloop.last %}
+        </div> 
+        <div class="row text-center mt-3">
+      {% endif %}
+    {% empty %}
+        <li>Não há quartos disponíveis.</li>
+    {% endfor %}
+  </div>
+
+
+<script>
+  $('.id_quarto').click(function(){
+    var num_quarto = $(this).data('id');
+    var form = $('<form action="{% url 'reservas:index' %}" method="POST">' +
+                 '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
+                 '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
+                 '</form>');
+    $('body').append(form);
+    form.submit();
+  });
+</script>
 
 {% endblock %}

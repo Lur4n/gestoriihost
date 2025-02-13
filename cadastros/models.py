@@ -77,7 +77,7 @@ class Quarto(models.Model):
     descricao = models.TextField(blank=True, null=True)
     preco = models.FloatField()
     capacidade = models.IntegerField()
-    disponibilidade = models.BooleanField(default=True)
+    disponibilidade = models.IntegerField(default=1)
 
     def __str__(self):
         return f"Quarto {self.num_quarto}"
@@ -85,12 +85,12 @@ class Quarto(models.Model):
 class Reserva(models.Model):
     # Campos
     check_in = models.DateField()
-    check_out = models.DateField()
-    diaria = models.IntegerField()
+    check_out = models.DateField(null=True)
+    diaria = models.IntegerField(null=True)
     observacoes = models.TextField(blank=True, null=True)
-    total = models.FloatField()
-    pago = models.BooleanField(default=False)
-    quant_pessoas = models.IntegerField()
+    total = models.FloatField(null=True)
+    pago = models.BooleanField(default=False, null=True)
+    quant_pessoas = models.IntegerField(null=True)
     
     # ForeignKeys 
     id_hospede = models.ForeignKey(Hospede, on_delete=models.CASCADE)
