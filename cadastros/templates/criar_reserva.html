@@ -1,0 +1,121 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+
+    <div class="container mt-2 p-4">
+        <div class="row text-center">
+        
+            <h1 class="display-5 font-weight-bold mb-3">Criar Reserva</h1>
+        </div>
+         
+         <label class="switch">
+               Inserir novo hóspede
+            
+            <input type="checkbox" id="toggleButton">
+            <span class="slider"></span>
+         </label>
+        <div class="row mt-3 d-flex">
+                  <div class="row">
+                     <div class="col-9">
+                        <div class="row">
+                           <div class="col-8">
+                              <label for="txtNome" class="form-label">Nome:</label>
+                              <input type="text" class="form-control shadow" id="txtNome" value="">
+                           </div>
+                           <div class="col-4">
+                              <label for="txtTelefone" class="form-label">Telefone</label>
+                              <input type="text" class="form-control shadow" id="txtTelefone" value="">
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-6">
+                              <label for="txtCpf" class="form-label mt-3">CPF:</label>
+                              <input type="text" class="form-control shadow" id="txtCpf" value="">
+                           </div>
+                           <div class="col-6">
+                              <label for="txtTelefone" class="form-label mt-3">Empresa</label>
+                              <input type="text" class="form-control shadow" id="txtTelefone" value="">
+                           </div>
+                        </div>
+                        <div class="row mt-3">
+                           <div class="col-6">
+                              <label for="dateCheckin" class="form-label">Check-in</label>
+                              <input name="dateCheckin" type="date" class="form-select shadow" id="dateCheckin" placeholder="Selecione uma data" value="">
+                           </div>
+                           <div class="col-6">
+                              <label for="dateCheckout" class="form-label">Check-out</label>
+                              <input name="dateCheckout" type="date" class="form-select shadow" id="dateCheckout" placeholder="Selecione uma data" value="">
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-3">
+                        <div class="text-white mt-3 mb-4 h-75 rounded azul">
+                           <!-- <div class="row">
+                           </div> -->
+                           <h1 class="display-5 font-bold text-center">Quarto: </h1>
+                           <hr>
+                           <div class="p-2 ">
+                              <fieldset>
+                                 <legend>Observações</legend>
+                                 <p class="m-4 justify-content-center"></p>
+                              </fieldset>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+        {% comment %} <div class="row mt-4 mb-5">
+            <p>Ainda não tem uma conta? <a href="#">Inscreva-se aqui</a></p>
+        </div> {% endcomment %}
+        {% include 'criar_reservas_table.html' %}
+        
+        <br>
+        <br>
+        <br>
+        <br>
+
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+               function filtra_nome_hospede(){
+                  let nome_hospede = $('#txtNome').val();
+                  $.ajax({
+                     url: '{% url "cadastros:busca_hospede" %}',
+                     data: {
+                        "nome_hospede": nome_hospede
+                     },
+                     success: function(data){
+                        $('#txtNome').value(data);
+                     }
+                  });
+               }
+               $('#txtBuscaNome').on('input', function () {
+                  filtraDepartamentoPorNome();
+               });
+            });
+        </script>
+        
+    <!-- Carregando o statico do calendario -->
+    <script src="{% static "js/flatpickr.js" %}"></script>
+    <script>
+      // Seleciona o checkbox
+      const toggleButton = document.getElementById("toggleButton");
+      let aux = document.getElementById("piru")
+
+      // Adiciona um evento para capturar quando o botão for alterado
+      toggleButton.addEventListener('change', function() {
+         if (toggleButton.checked) {
+            console.log('O botão está ativado');
+            aux.removeAttribute("hidden");
+            // Aqui você pode executar algo quando o botão estiver ativado
+         } else {
+            console.log('O botão está desativado');
+            aux.setAttribute("hidden", true);
+            // Aqui você pode executar algo quando o botão estiver desativado
+         }
+      });
+
+    </script>
+        
+{% endblock %}    

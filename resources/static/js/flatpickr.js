@@ -8,9 +8,9 @@ const dia = String(hoje.getDate()).padStart(2, '0'); // Ajuste do dia
 const dataFormatada = `${dia}-${mes}-${ano}`;
 
 // Define o valor do input como a data atual
-document.getElementById("#txtDatepicker").value = dataFormatada;
+document.getElementById("#datepicker").value = dataFormatada;
 
-flatpickr("#txtDatepicker", {
+flatpickr("#datepicker", {
     dateFormat: "d/m/Y",
     disableMobile: true, // Impede a abertura do calendário nativo no celular
     locale: "pt"
