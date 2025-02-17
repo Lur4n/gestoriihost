@@ -1,0 +1,74 @@
+{% load static %}
+{% for reserva in reserva_lista %}
+<!-- Reserva -->
+<div class="d-flex border-top shadow border-2 border-warning pt-2 mb-5 rounded bg-body-tertiary">
+   <!-- Boladona -->
+   <div class="row p-4" data-id="{{reserva.id}}">
+      <div class="col-9">
+         <div class="row">
+            {{reserva.is_active}}
+         </div>
+         <div class="row">
+            <div class="col-8">
+               <label for="txtNome_{{reserva.id}}" class="form-label">Nome:</label>
+               <input type="text" class="form-control shadow" id="txtNome_{{reserva.id}}"  value="{{reserva.id_hospede.nome}}">
+            </div>
+            <div class="col-4">
+               <label for="id_{{reserva.id}}" class="form-label">ID Reserva</label>
+               <input type="text" class="form-control shadow" id="id_{{reserva.id}}" readonly value="{{reserva.id}}">
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-6">
+               <label for="txtCpf_{{reserva.id}}" class="form-label mt-3">CPF:</label>
+               <input type="text" class="form-control shadow" id="txtCpf_{{reserva.id}}" value="{{reserva.id_hospede.cpf}}">
+            </div>
+            <div class="col-6">
+               <label for="txtTelefone_{{reserva.id}}" class="form-label mt-3">Telefone</label>
+               <input type="text" class="form-control shadow" id="txtTelefone_{{reserva.id}}" value="{{reserva.id_hospede.telefone}}">
+            </div>
+         </div>
+         <div class="row mt-3">
+            <div class="col-5">
+               <label for="dateCheckin" class="form-label">Check-in</label>
+               <input name="txtCheckin" type="date" class="form-select shadow" id="txtCheckin_{{reserva.id}}" placeholder="Selecione uma data" value="{{reserva.check_in|date:'Y-m-d'}}">
+            </div>
+            <div class="col-5">
+               <label for="dateCheckout" class="form-label">Check-out</label>
+               <input name="txtCheckout" type="date" class="form-select shadow" id="txtCheckout_{{reserva.id}}" placeholder="Selecione uma data" value="{{reserva.check_out|date:'Y-m-d'}}">
+            </div>
+            <div class="col-2">
+               <label for="inputZip" class="form-label">Diárias</label>
+               <input type="text" class="form-control shadow" id="txtDiaria_{{reserva.id}}">
+            </div>
+         </div>
+         <div class="row mt-3">
+            <div class="col-9 mt-3 ">
+               <button class="btn btn-info" data-id="{{reserva.id}}" id="btnSalvar" hidden>Salvar Alterações</button>
+               <button class="btn btn-danger" data-id="{{reserva.id}}" id="btnDeletar" onclick="deleta_reserva({{reserva.id}})">Deletar</button>
+               {% if reserva.is_active %}
+                  <button class="btn btn-warning" data-id="{{reserva.id}}" id="btnFechar" onclick="fechar_reserva({{reserva.id}})">Fechar Reserva</button>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+      <div class="col-3">
+         <div class="row text-white rounded azul">
+            <h1 class="display-5 font-bold text-center">Quarto: {{reserva.num_quarto.num_quarto}}</h1>
+         </div>
+         <hr>
+         <div class="row text-white rounded azul">
+            <div class="container p-3">
+               <textfield>
+                  <legend>Observações</legend>
+                  {% comment %} <p class=" justify-content-center">{{reserva.observacoes}}</p> {% endcomment %}
+                  <p class=" justify-content-center">What is Lorem Ipsum?
+                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+               </textfield>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}

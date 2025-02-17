@@ -2,217 +2,243 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
-    
-    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
-    <!-- <link rel="stylesheet" href="{% static 'css/main.css' %}"> -->
-    <!-- <link rel="stylesheet" href="{% static 'css/crud.css' %}"> -->
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>
+      {% if request.session.perfil_atual == 'Administrador'%}
+            Área do {{request.session.perfil_atual}}
+      {% else %}
+            Área de{{request.session.perfil_atual}}
+      {% endif %}
+   </title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
 
-
-    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/toastr.min.js' %}"></script>
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
-    
+   <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg border-bottom border-1 border p-3 shadow" style="background-color: #c6c6c6;">
-    {% comment %} <nav class="navbar sticky-top navbar-expand-lg border-bottom border-1 border p-3 shadow" style="background-color:rgb(171, 250, 165);"> {% endcomment %}
+   
+   </div>
+    <nav class="navbar sticky-top navbar-expand-lg p-3 shadow" style="background-color: #ffffff;">
+    <!-- <nav class="navbar sticky-top navbar-expand-lg p-3 shadow" style="background-color: #a1a1a1;"> -->
         <div class="container d-flex justify-content-between align-items-center">
             {% if request.session.perfil_atual == 'Administrador' %}
-            <div class="fade-in_sair" id="sair"></div>
-                <!-- Imagem à esquerda -->
-                <a href="{% url 'core:main' %}" class="nav-link">
-                    <img src='{% static "img/logoGHpreta.png" %}'style="width: 150px;">
-                </a>
-        
-                <!-- Botão do menu (visível apenas em telas pequenas) -->
-                <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-        
-                <!-- Itens do menu alinhados à direita -->
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'reservas:index' %}">Reservas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Cadastros</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="{% url 'cadastros:criar_reserva' %}">Criar Reservas</a>
-                        </li>
-                        <li class="nav-item me-2">
-                           <a class="nav-link" href="{% url 'cadastros:criar_hospede' %}">Criar Hospede</a>
-                        </li>
-                        <li class="nav-item me-2">
-                           <a class="nav-link" href="{% url 'cadastros:criar_quarto' %}">Criar Quartos</a>
-                        </li>
-                        </li>
-                        <li class="nav-item me-2">
-                            <a class="nav-link" href="#">Relatórios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{% url 'autenticacao:logout' %}">
-                                <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Sair</button>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+               <div class="fade-in" id="sair"> </div>
+                  <!-- Imagem à esquerda -->
+                  <a href="{% url 'core:main' %}" class="nav-link">
+                     <img src='{% static "img/logoGHpreta.png" %}'style="width: 200px;">
+                  </a>
+                  <!-- Botão do menu (visível apenas em telas pequenas) -->
+                  <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                     <span class="navbar-toggler-icon"></span>
+                  </button>         
+                  <!-- Itens do menu alinhados à direita -->
+                  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                     <ul class="navbar-nav">
+                        <div class="dropdown">
+                           <li class="nav-item me-2">
+                              <a href="{% url 'core:main' %}" class="nav-link">Calendário de Disponibilidade</a>
+                           </li>
+                        </div>
+                        <!-- Dropdown Reservas -->
+                        <div class="dropdown">
+                           <li class="nav-item">
+                              <button class="btn dropdown-toggle" type="submit" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Reservas
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{% url 'cadastros:criar_reserva' %}">Criar Reservas</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'reservas:reservas' %}">Editar Reservas</a></li>
+                              </ul>
+                           </li>
+                        </div>
+                        <!-- Dropdown Hóspedes -->
+                        <div class="dropdown">
+                           <li class="nav-item">
+                              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hóspedes
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                 <li><a class="dropdown-item" href="{% url 'cadastros:criar_hospede' %}">Criar Hóspede</a></li>
+                                 <li><a class="dropdown-item" href="{% url 'cadastros:editar_hospede' %}">Editar Hóspede</a></li>
+                              </ul>
+                           </li>
+                        </div>
+                        <!-- Dropdown Edição -->
+                        <div class="dropdown">
+                           <li class="nav-item">
+                              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Quartos
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    
+                                    <li><a class="dropdown-item" href="{% url 'cadastros:criar_quarto' %}">Criar Quarto</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'cadastros:editar_quarto' %}">Editar Quartos</a></li>
+                              </ul>
+                           </li>
+                        </div>
+                        <div class="dropdown">
+                           <li class="nav-item me-2">
+                              <a href="#" class="nav-link">Relatórios</a>
+                           </li>
+                        </div>
+                        <div class="dropdown">
+                           <li class="nav-item">
+                              <button class="btn btn-sm btn-dark  rounded dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Adm </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                 <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                                 <li><a class="dropdown-item" href="#">Funcionários</a></li>
+                                 <li><hr class="dropdown-divider"></li>
+                                 <li class="dropdown-item text-end">
+                                    <a  href="{% url 'autenticacao:logout' %}">
+                                       <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Sair</button>
+                                    </a>
+                                 </li>
+                              </ul>
+                           </li>
+                        </div>
+                     </ul>
+                  </div>
+               </div>
             {% else %}
-                {% if request.session.perfil_atual == 'Funcionario'%}
-                <div class="fade-in_sair" id="sair"></div>
-                    <!-- Imagem à esquerda -->
-                    <a href="{% url 'core:main' %}" class="nav-link">
+               {% if request.session.perfil_atual == 'Funcionario'%}
+                  <div class="fade-in_sair" id="sair"></div>
+                     <!-- Imagem à esquerda -->
+                     <a href="{% url 'core:main' %}" class="nav-link">
                         <img src='{% static "img/logoGHpreta.png" %}'style="width: 150px;">
-                    </a>
+                     </a>
             
-                    <!-- Botão do menu (visível apenas em telas pequenas) -->
-                    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                     <!-- Botão do menu (visível apenas em telas pequenas) -->
+                     <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
-                    </button>
+                     </button>
             
-                    <!-- Itens do menu alinhados à direita -->
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                     <!-- Itens do menu alinhados à direita -->
+                     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reservas:index' %}">Reservas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Criar Reservas</a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="nav-link" href="#">Criar Hospede</a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="nav-link" href="#">Criar Quartos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'autenticacao:logout' %}">
-                                    <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;">Sair</button>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                {% else %}
-                <div class="fade-in_sair" id="sair"></div>
-                    <!-- Imagem à esquerda -->
-                    <a href="{% url 'core:main' %}" class="nav-link">
-                        <img src='{% static "img/logoGHpreta.png" %}'style="width: 150px;">
-                    </a>
-            
-                    <!-- Botão do menu (visível apenas em telas pequenas) -->
-                    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-            
-                    <!-- Itens do menu alinhados à direita -->
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Pacotes</a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="nav-link" href="#">Contato</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'autenticacao:login' %}">
-                                    <button class="btn btn-sm shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px; background-color:rgb(30, 30, 30);color:white;">Login</button>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                {% endif %}
+                           <li class="nav-item me-2">
+                              <a href="{% url 'core:main' %}" class="nav-link">Quartos</a>
+                           </li>
+                           <li class="nav-item me-2">
+                              <a class="nav-link" href="{% url 'reservas:reservas' %}">Lista de Reservas</a></li>
+                           </li>
+                           <!-- Dropdown Cadastros -->
+                           <div class="dropdown">
+                              <li class="nav-item">
+                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                       Cadastros
+                                 </button>
+                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                       <li><a class="dropdown-item" href="{% url 'cadastros:criar_reserva' %}">Criar Reservas</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'cadastros:criar_hospede' %}">Criar Hospede</a></li>
+                                 </ul>
+                              </li>
+                           </div>
+                           <li class="nav-item me-2">
+                              <a class="nav-link" href="#">Relatórios</a>
+                           </li>
+                           <li class="nav-item">
+                              <a href="{% url 'autenticacao:logout' %}">
+                                 <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Sair</button>
+                              </a>
+                           </li>
+                     </ul>
+                     </div>
+                  </div>
+               {% else %}
+                  <div class="fade-in_sair" id="sair"></div>
+                     <!-- Imagem à esquerda -->
+                     <a href="{% url 'core:main' %}" class="nav-link">
+                           <img src='{% static "img/logoGHpreta.png" %}'style="width: 150px;">
+                     </a>
+               
+                     <!-- Botão do menu (visível apenas em telas pequenas) -->
+                     <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                           <span class="navbar-toggler-icon"></span>
+                     </button>
+               
+                     <!-- Itens do menu alinhados à direita -->
+                     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                           <ul class="navbar-nav">
+                              <li class="nav-item">
+                                 <a class="nav-link" href="#">Pacotes</a>
+                              </li>
+                              <li class="nav-item me-2">
+                                 <a class="nav-link" href="#">Contato</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a href="{% url 'autenticacao:login' %}">
+                                       <button class="btn btn-sm shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px; background-color:rgb(30, 30, 30);color:white;">Login</button>
+                                 </a>
+                              </li>
+                           </ul>
+                     </div>
+                  </div>
+               {% endif %}
             {% endif %}
                     
         </div>
     </nav>
+   <div class="fade-in" id="minhaDiv">
+      {% block conteudo %}
+      {% endblock %}
+   </div>
+   
     
-    <div class="fade-in" id="minhaDiv">
-        {% block conteudo %}
-        {% endblock %}
-    </div>
-    <footer id="rodape" class="text-light py-4 mt-5" style="background:rgb(66, 66, 66);">
-        <div class="container text-center">
-            <h5 class="fw-bold"><img src='{% static "img/Logo GestoriiHost Branca.png" %}'style="width: 150px;"> - Sistema de Gerenciamento de Hotelaria</h5>
-            
-            <button id="btnSobre" class="btn btn-outline-light btn-sm mt-2">Sobre</button>
-
-            <p class="mt-3 mb-1">
-                Este sistema está licenciado sob 
-                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none">
-                    Licença Creative Commons &copy; 4.0
-                </a> 
-                <img src="{% static 'img/creativecommons.png' %}" width="45" alt="Creative Commons">
-            </p>
-
-            <p class="mb-0">
-                Disponível para download em 
-                <a href="https://github.com/lur4n/gestoriihost" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none">
-                    github.com/lur4n/gestoriihost
-                </a> 
-                <img src="{% static 'img/github.png' %}" width="18" alt="GitHub">
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        $(document).ready(function() {
-            toastr.options = {
-                "debug": false,
-                "newestOnTop": true,
-                "progressBar": false,
-                "positionClass": "toast-bottom-left",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "timeOut": "3000",
-                "extendedTimeOut": "300",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-    
-            {% if messages %}
-                {% for message in messages %}
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                        toastr.error("{{ message }}", "Erro");
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                        toastr.success("{{ message }}", "Sucesso 😉");
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
-                        toastr.warning("{{ message }}", "Aviso");
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                        toastr.info("{{ message }}", "Atenção");
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-    
-            //sobre
-            $('#btnSobre').click(function() {
-                $('#jnlSobre').modal('show');
-            });
-        });
-    </script>
-    <script src="{% static "js/suavidade.js" %}"></script>
-    <!-- Carregando o statico do calendario -->
-    <script src="{% static "js/flatpickr.js" %}"></script>
     
 </body>
+
+
+<script src="{% static 'js/toastr.min.js' %}"></script>
+
+
+      
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+<script>
+   $(document).ready(function() {
+      
+      toastr.options = {
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-bottom-left",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "timeOut": "3000",
+            "extendedTimeOut": "300",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+      };
+
+      {% if messages %}
+            {% for message in messages %}
+               {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                  toastr.error("{{ message }}", "Erro");
+               {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                  toastr.success("{{ message }}", "Sucesso 😉");
+               {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                  toastr.warning("{{ message }}", "Aviso");
+               {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                  toastr.info("{{ message }}", "Atenção");
+               {% endif %}
+            {% endfor %}
+      {% endif %}
+
+      //sobre
+      $('#btnSobre').click(function() {
+            $('#jnlSobre').modal('show');
+      });
+   });
+</script>
+<script src="{% static "js/suavidade.js" %}"></script>
+<!-- Carregando o statico do calendario -->
+<script src="{% static "js/flatpickr.js" %}"></script>
 </html>
 

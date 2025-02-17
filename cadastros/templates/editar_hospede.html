@@ -1,0 +1,189 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+<div class="container pt-4">
+   <!-- Titulo -->
+   <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Hóspedes</h3><hr> 
+   <div class="mt-1 mb-1">
+      <h4 class="display-5" style="font-size: 18pt;">Quantidade de Hóspedes: x</h4>
+   </div>
+   <div class="text-center">
+      <table class="table table-hover striped">
+         <thead class="border">
+            <tr class="table-dark align-middle">
+               <th class="display-5" style="font-size:18px;">Nome</th>
+               <th class="display-5" style="font-size:18px;">Empresa</th>
+               <th class="display-5" style="font-size:18px;">Cpf</th>
+               <th class="display-5" style="font-size:18px;">Telefone</th>
+               <th class="display-5 d-flex justify-content-center align-middle" style="font-size:15px;">
+                  Edição
+                  <div class="form-check form-switch ms-2">
+                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                  </div>
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for hospede in page_obj %}
+            <tr class="hospede_row border align-middle" data-id="{{hospede.id}}" style="font-size: 12px;" >
+               <td>{{hospede.nome}}</td>
+               <td>{{hospede.empresa}}</td>
+               <td>{{hospede.cpf}}</td>
+               <td>{{hospede.telefone}}</td>
+               <td>
+                  <div class="container ">
+                     <div class="row justify-content-center">
+                        <div class="col-auto">
+                           <img class="apagar" src="{% static 'img/delete.png'%}" data-id="{{hospede.id}}" alt="" width="20px" onclick="confirmarExclusao()">
+                        </div>
+                        <div class="col-auto">
+                           <img src="{% static 'img/update.png'%}" alt="" width="20px">
+                        </div>
+                     </div>
+                  </div>
+               </td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      {% include 'paginacao.html'%}
+   </div>
+   <form action="{% url 'cadastros:editar_hospede' %}" method="POST">
+      {% csrf_token %}
+      <div class="fade-in-modo-edicao d-flex justify-content-center align-items-center">
+         <table class="edicao_row d-none table table-success">
+         <!-- <table class="container edicao_row"> -->
+            <thead>
+               <tr>
+                  <th class="display-5" style="font-size:17px;">Nome</th>
+                  <th class="display-5" style="font-size:17px;">Empresa</th>
+                  <th class="display-5" style="font-size:17px;">Cpf</th>
+                  <th class="display-5" style="font-size:17px;">Telefone</th> 
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td class="align-middle">
+                     <input type="number" value="{{hospede.id}}" id="id_hospede" name="id_hospede" hidden>
+                     <input name="txtEditaNome" id="txtEditaNome" type="text" class="form-control form-control-sm shadow" placeholder="Editar número nome">
+                  </td>
+                  <td class="align-middle">
+                     <input id="txtEditaEmpresa" name="txtEditaEmpresa" type="text" class="form-control form-control-sm shadow" placeholder="Editar empresa">
+                  </td>
+                  <td class="align-middle">
+                     <input id="txtEditaCpf" name="txtEditaCpf" type="number" step="0.01" class="form-control form-control-sm shadow" placeholder="Editar cpf">
+                  </td>
+                  <td class="align-middle">
+                     <input id="txtEditaTelefone" name="txtEditaTelefone" type="number" class="form-control form-control-sm shadow" placeholder="Editar telefone">
+                  </td>
+                  
+               </tr>
+               <tr>
+                  <td colspan="5" class="text-end ">
+                     <a href="#">
+                        <button class="btn btn-sm btn-dark shadow mt-2" type="submit" style="padding: 8px 25px 8px 25px; border-radius: 2px; background-color:rgba(255, 255, 255, 0);color:rgb(0, 0, 0);">Atualizar</button>
+                     </a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </form>
+</div>
+<script>
+   $(document).ready(function () {
+      function clickNoGrid(){
+         $('.hospede_row').click(function(){
+            $('.hospede_row').removeClass('table-primary');
+            $(this).addClass('table-primary');
+            $('.edicao_row').removeClass('d-none');
+            $('#flexSwitchCheckDefault').prop('checked', true);
+
+            var hospede_id = $(this).data('id');
+            // console.log(hospede_id)
+            $.ajax({
+               url: '{% url "cadastros:busca_hospede_id" %}',
+               data: {
+                     'id_hospede': hospede_id
+               },
+               success: function(data){
+                  console.log("Dados recebidos:", data);
+                  $('#id_hospede').val(data.hospede[0].id)
+                  console.log($('#id_hospede').val())
+                  $('#txtEditaNome').val(data.hospede[0].nome)
+                  $('#txtEditaEmpresa').val(data.hospede[0].empresa)
+                  $('#txtEditaCpf').val(data.hospede[0].cpf)
+                  $('#txtEditaTelefone').val(data.hospede[0].telefone)
+               }
+            });
+         });
+         
+      }
+      function clickNoEditar(){
+         $('.hospede_row').click(function(){
+            $('.edicao_row').removeClass('d-none')
+            $('#flexSwitchCheckDefault').prop('checked', true);
+         });
+      }
+
+      clickNoEditar();
+      clickNoGrid();
+      
+      function confirmarExclusao() {
+         $('.apagar').click(function() {
+            var hospedeRow = $(this).closest('tr'); // Pega a linha <tr> que contém o ícone
+            var id_hospede = $(this).data('id'); // Pega o número do hospede a ser excluído
+            console.log("ID do hospede a ser excluído:", id_hospede);
+
+            if (id_hospede) {
+                  var resposta = confirm("Você tem certeza de que deseja excluir o hospede " + num + "?");
+                  if (resposta) {
+                     $.ajax({
+                        url: '{% url "cadastros:apagar_hospede" %}', // URL para a view
+                        method: 'GET',
+                        data: {
+                              'id_hospede': id_hospede, // Passando o número do hospede
+                              'csrfmiddlewaretoken': '{{ csrf_token }}' // CSRF token para segurança
+                        },
+                        success: function(response) {
+                              console.log('hospede excluído com sucesso');
+                              toastr.success(response.message); // Mensagem de sucesso com toastr
+
+                              // Remove a linha da tabela após a exclusão
+                              hospedeRow.remove(); 
+
+                              // Recarrega a página para garantir a atualização (caso necessário)
+                              location.reload();
+                        },
+                        error: function() {
+                              toastr.error("Erro ao excluir o hospede. Tente novamente.");
+                              alert("Erro ao excluir o hospede. Tente novamente.");
+                        }
+                     });
+                  } else {
+                     alert("Exclusão cancelada.");
+                  }
+            }
+         });
+      }
+
+      confirmarExclusao();
+      
+   });
+
+   document.getElementById("flexSwitchCheckDefault").addEventListener("change", function() {
+        if (this.checked) {
+            console.log("Toggle ligado");
+            $('.edicao_row').removeClass('d-none')
+         } else {
+            console.log("Toggle desligado");
+            $('.hospede_row').removeClass('table-primary')
+            $('.edicao_row').addClass('d-none')
+            $('#txtEditaNome').val('')
+            $('#txtEditaEmpresa').val('')
+            $('#txtEditaCpf').val('')
+            $('#txtEditaTelefone').val('')
+        }
+    });
+</script>
+{% endblock %}

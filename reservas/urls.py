@@ -4,11 +4,9 @@ from . import views
 app_name = "reservas"
 
 urlpatterns = [
-    # Lista de reservas
-    # path("", views.lista_reservas, name="lista_reservas"),
-    path("", views.reservas, name='index'),
-    # path('obter_departamento_por_id/', views.obter_departamento_por_id, name='obter_departamento_por_id'),
-    # path('excluir_departamento/', views.excluir_departamento, name='excluir_departamento'),
-    # path('pesquisar_departamento_por_nome/', views.pesquisar_departamento_por_nome, name='pesquisar_departamento_por_nome'),
-    # -------------------------
+    path("", views.reservas, name='reservas'),
+    path('pesquisa_reserva/', views.pesquisa_reserva, name='pesquisa_reserva'),
+    path('altera_reserva/', views.altera_reserva, name='altera_reserva'),
+    path('deleta_reserva/', views.deleta_reserva, name='deleta_reserva'),
+    path('fechar_reserva/', views.fechar_reserva, name='fechar_reserva'),
 ]

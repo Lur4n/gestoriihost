@@ -1,0 +1,8 @@
+<h1>Redefinir Senha</h1>
+<form method="post">
+   {% csrf_token %}
+   <input type="hidden" name="token" value="{{ token }}">
+   <label for="senha">Nova Senha:</label>
+   <input type="password" id="senha" name="senha" required>
+   <button type="submit">Alterar Senha</button>
+</form>  

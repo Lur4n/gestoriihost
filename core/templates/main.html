@@ -1,56 +1,64 @@
 {% extends 'master.html' %}
 {% load static %}
 {% block conteudo %}
+<!-- Titulo -->
+<div class="container pt-4">
+   <!-- <h1 class="display-5 font-weight-bold">Olá, {{ request.session.nome }}</h1><hr>  -->
+   <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Olá, {{ request.session.nome }}</h3><hr> 
 
-<div class="container mt-2 p-4 w-75">
-  <h1 class="display-5 font-weight-bold">Home</h1>
-  <hr>
-  <div class="container ">
-    <div class="row mb-5 ">
-      <div class="d-flex justify-content-end">
-        <div class="col-auto ms-3">Disponivel</div>
-        <div class="col-1 ms-2 me-2 legenda-cartao-verde"></div>
 
-        <div class="col-auto ms-3">Ocupado</div>
-        <div class="col-1 ms-2 me-2 legenda-cartao-vermelho"></div>
+   <div class="container ">
+      <div class="row mt-5 mb-5 ">
+         <div class="d-flex justify-content-end">
+            <div class="col-1 ms-4 me-1 legenda-cartao-verde"></div>
+            <div class="col-auto">Disponivel</div>
 
-        <div class="col-auto ms-3">Limpeza</div>
-        <div class="col-1 ms-2 me-2 legenda-cartao-azul"></div>
+            <div class="col-1 ms-4 me-1 legenda-cartao-vermelho"></div>
+            <div class="col-auto ">Ocupado</div>
 
-        <div class="col-auto ms-3">Manutenção</div>
-        <div class="col-1 ms-2 me-2 legenda-cartao-azul"></div>
+            <div class="col-1 ms-4 me-1 legenda-cartao-azul"></div>
+            <div class="col-auto ">Limpeza</div>
+
+            <div class="col-1 ms-4 me-1 legenda-cartao-azul"></div>
+            <div class="col-auto ">Manutenção</div>
       </div>
-    </div>
-  </div>
-  
-{% for quarto in quarto_lista %}
-    {% empty %}
-        <li>Não há quartos disponíveis.</li>
-    {% endfor %}
+   </div>
 
-  <div class="row text-center mt-3">
-  {% for quarto in quarto_lista %}
-      {% if quarto.disponibilidade == 1 %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-verde id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
-        <p class="display-4">{{quarto.num_quarto}}</p>
+   <!-- <div class="container">
+      <input type="datetime" style="text-decoration: none;" value="11/02/2024">
+   </div> -->
+
+   <div class="container-fluid">
+      <div class="row text-center mt-3">
+      {% for quarto in quarto_lista %}
+         {% if quarto.disponibilidade == 1 %}
+         <div class="col shadow ms-3 me-3 mb-2 cartao-verde id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
+            <p class="display-5">{{quarto.num_quarto}}</p>
+            <hr>
+            <p >Quarto disponível</p>
+            </div>
+            {% elif quarto.disponibilidade == 2 %}
+            <div class="col shadow ms-3 me-3 mb-2 cartao-vermelho id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
+               <p class="display-5" >{{quarto.num_quarto}}</p>
+               <hr>
+               <p>Quarto ocupado</p>
+               <p></p>
+            </div>
+            {% else %}
+            <div class="col shadow ms-3 me-3 mb-2 cartao-azul id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
+               <p class="display-5" >{{quarto.num_quarto}}</p>
+               <hr>
+               <p >Quarto indisponível</p>
+            </div>
+         {% endif %}
+         {% if forloop.counter|divisibleby:8 or forloop.last %}
+      </div> 
+      <div class="row text-center mt-3">
+         {% endif %}
+         {% endfor %}
       </div>
-      {% elif quarto.disponibilidade == 2 %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-vermelho id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
-        <p class="display-4" >{{quarto.num_quarto}}</p>
-      </div>
-      {% else %}
-      <div class="col shadow ms-3 me-3 mb-2 cartao-azul id_quarto" data-id="{{quarto.num_quarto}}" data-disp="{{quarto.disponibilidade}}">
-        <p class="display-4" >{{quarto.num_quarto}}</p>
-      </div>
-      {% endif %}
-      {% if forloop.counter|divisibleby:4 or forloop.last %}
-        </div> 
-        <div class="row text-center mt-3">
-      {% endif %}
-    {% empty %}
-        <li>Não há quartos disponíveis.</li>
-    {% endfor %}
-  </div>
+   </div>
+</div>
 
 
 <script>
@@ -58,7 +66,7 @@
     var num_quarto = $(this).data('id');
     var disponibilidade = $(this).data('disp');
     if(disponibilidade==1){
-      var form = $('<form action="{% url 'core:main' %}" method="POST">' +
+      var form = $('<form action="{% url 'cadastros:criar_reserva' %}">' +
          '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
          '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
       '</form>');
@@ -66,7 +74,7 @@
       $('body').append(form);
       form.submit();
     }else if(disponibilidade==2){
-      var form = $('<form action="{% url 'reservas:index' %}" method="POST">' +
+      var form = $('<form action="{% url 'reservas:reservas' %}" method="POST">' +
          '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
          '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
       '</form>');
@@ -74,7 +82,7 @@
       $('body').append(form);
       form.submit();
     }else{
-      var form = $('<form action="{% url 'core:main' %}" method="POST">' +
+      var form = $('<form action="{% url 'cadastros:editar_quarto' %}" method="POST">' +
          '<input type="hidden" name="num_quarto" value="' + num_quarto + '">' +
          '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
       '</form>');
@@ -82,7 +90,6 @@
       $('body').append(form);
       form.submit();
     }
-    
   });
 </script>
 

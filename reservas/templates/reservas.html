@@ -1,0 +1,198 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+<!-- Titulo -->
+<div class="container pt-4">
+   <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Editar Reservas</h3><hr> 
+   <!-- Submenu -->
+   <div class="d-flex mt-4 mb-3">
+      <div class="col-6">
+         <h4 class="display-5" style="font-size: 18pt;">QTD Hospedes: 11</h4>
+      </div>
+      <!-- Pesquisa -->
+      <div class="col-6">
+         <div class="container">
+            <div class="row">
+               <div class="col-1 text-end">
+                  <img src="{% static 'img/search.png' %}" width="20px" height="20px" alt="Pesquisar">
+               </div>
+               <div class="col-7">
+                  <input type="text" class="form-control form-control-sm" id="txtNomePesq" placeholder="Nome" value="" style="width: 100%;">
+               </div>
+               <div class="col-1 text-end">
+                  <img src="{% static 'img/search.png' %}" width="20px" height="20px" alt="Pesquisar">
+               </div>
+               <div class="col-3 ">
+                  <input type="number" class="form-control form-control-sm" id="txtQuartoPesq" placeholder="Quarto" value="" style="width: 100%;">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div id="index-table">
+      {% include 'editar_reserva.html' %}
+   </div>
+</div>
+<script>
+   function filtraReservaNome() {
+      let reserva_nome = $('#txtNomePesq').val();
+      $.ajax({
+         url: '{% url "reservas:pesquisa_reserva" %}',
+         data: {
+            'reserva_nome': reserva_nome
+         },
+         success: function(data) {
+            $('#index-table').html(data.html);
+            
+            document.querySelectorAll('.row[data-id]').forEach(function (row) {
+               let inputs = row.querySelectorAll("input:not([readonly])");
+               let btnSalvar = row.querySelector("button[id^='btnSalvar']");
+         
+               inputs.forEach(input => {
+                     input.addEventListener("input", function () {
+                        btnSalvar.hidden = false; // Exibe o botão ao detectar mudanças
+                     });
+               });
+
+               btnSalvar.addEventListener("click", function () {
+                  var dataId = $(this).data('id');
+                  altera_reserva(dataId)
+               });
+
+            });
+
+         }
+      });
+   }
+
+   function filtraReservaQuarto() {
+      let reserva_quarto = $('#txtQuartoPesq').val();
+      $.ajax({
+         url: '{% url "reservas:pesquisa_reserva" %}',
+         data: {
+            'reserva_quarto': reserva_quarto
+         },
+         success: function(data) {
+            $('#index-table').html(data.html);
+            
+            document.querySelectorAll('.row[data-id]').forEach(function (row) {
+               let inputs = row.querySelectorAll("input:not([readonly])");
+               let btnSalvar = row.querySelector("button[id^='btnSalvar']");
+         
+               inputs.forEach(input => {
+                     input.addEventListener("input", function () {
+                        btnSalvar.hidden = false; // Exibe o botão ao detectar mudanças
+                     });
+               });
+
+               btnSalvar.addEventListener("click", function () {
+                  var dataId = $(this).data('id');
+                  altera_reserva(dataId)
+               });
+
+            });
+         }
+      });
+   }
+
+   function altera_reserva(dataId){
+      console.log("Data ID:", dataId);
+      var nome = $("#txtNome_" + dataId).val();
+      var cpf = $("#txtCpf_" + dataId).val();
+      var telefone = $("#txtTelefone_" + dataId).val();
+      var checkin = $("#txtCheckin_" + dataId).val();
+      var checkout = $("#txtCheckout_" + dataId).val();
+      
+      console.log("Nome:", nome);
+      console.log("CPF:", cpf);
+      console.log("Telefone:", telefone);
+      console.log("Check-in:", checkin);
+      console.log("Check-out:", checkout);
+      
+      $.ajax({
+         url:'{% url "reservas:altera_reserva" %}',
+         method: 'GET',
+         data: {
+            'idReserva': dataId, 
+            'nomeReserva': nome,
+            'cpfReserva': cpf,
+            'telefoneReserva': telefone,
+            'checkinReserva' : checkin,
+            'checkoutReserva' : checkout
+         },
+         success: function(reponse){
+            // toastr.success(response.message); // Mensagem de sucesso com toastr
+            location.reload();
+         }
+      })
+   }
+
+   function deleta_reserva(dataId){
+      console.log("Data ID:", dataId);
+      $.ajax({
+         url:'{% url "reservas:deleta_reserva" %}',
+         method: 'GET',
+         data: {
+            'idReserva': dataId,
+         },
+         success: function(reponse){
+            // toastr.success(response.message); // Mensagem de sucesso com toastr
+            location.reload();
+         }
+      })
+   }
+
+   function fechar_reserva(dataId){
+      console.log("Data ID:", dataId);
+      $.ajax({
+         url:'{% url "reservas:fechar_reserva" %}',
+         method: 'GET',
+         data: {
+            'idReserva': dataId,
+         },
+         success: function(reponse){
+            // toastr.success(response.message); // Mensagem de sucesso com toastr
+            location.reload();
+         }
+      })
+   }
+
+   // --------------------------- Ready ------------------------------------
+
+   $(document).ready(function () {
+      //evento de input na caixa de texto de pesquisa
+      if ($('#txtNomePesq').length) {
+      $('#txtNomePesq').on('input', function () {
+         filtraReservaNome();
+      });
+      }
+
+      if ($('#txtQuartoPesq').length) {
+         $('#txtQuartoPesq').on('input', function () {
+            filtraReservaQuarto();
+         });
+      }
+      
+      document.querySelectorAll('.row[data-id]').forEach(function (row) {
+         let inputs = row.querySelectorAll("input:not([readonly])");
+         let btnSalvar = row.querySelector("button[id^='btnSalvar']");
+         // let btnDeletar = row.querySelector("button[id^='btnDeletar']");
+         // let btnFechar = row.querySelector("button[id^='btnFechar']");
+   
+         inputs.forEach(input => {
+               input.addEventListener("input", function () {
+                  btnSalvar.hidden = false; // Exibe o botão ao detectar mudanças
+               });
+         });
+
+         btnSalvar.addEventListener("click", function () {
+            var dataId = $(this).data('id');
+            altera_reserva(dataId)
+         });
+      });
+
+   
+   });
+
+</script>
+{% endblock %}
