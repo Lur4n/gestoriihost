@@ -62,7 +62,9 @@ def criar_reserva(request):
       checkout = request.POST.get('dateCheckout')
       num_quarto = request.POST.get('num_quarto')
 
+      print(checkout)
       if(checkout==""):
+         print(checkout)
          checkout = None
 
       if (nome=="" or checkin=="" or cpf=="" or num_quarto==""):

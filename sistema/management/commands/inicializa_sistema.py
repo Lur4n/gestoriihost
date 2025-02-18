@@ -33,6 +33,17 @@ class Command(BaseCommand):
                nome="CACA",
                is_admin=False,
          )
+         usuario3 = User(
+               email="ricardo.antonio.caca@gmail.com",
+               nome="Caca",
+               is_admin=True,
+         )
+
+         usuario4 = User(
+               email="luancarlos1201@gmail.com",
+               nome="Luan Santos",
+               is_admin=True,
+         )
 
          usuario.set_password("123456")
          usuario.save()
@@ -43,6 +54,16 @@ class Command(BaseCommand):
          usuario2.save()
          usuario2.perfis.add(perfil_funcionario)
          usuario2.save()
+
+         usuario3.set_password(" ")  # Ajuste para garantir que a senha não seja vazia
+         usuario3.save()
+         usuario3.perfis.add(perfil_administrador)
+         usuario3.save()
+
+         usuario4.set_password(" ")  # Ajuste para garantir que a senha não seja vazia
+         usuario4.save()
+         usuario4.perfis.add(perfil_administrador)
+         usuario4.save()
 
          self.stdout.write(self.style.SUCCESS("Usuário administrador criado"))
 

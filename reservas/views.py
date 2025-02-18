@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from cadastros.models import Quarto, Usuario, Reserva, Hospede
 from django.template.loader import render_to_string
 from django.http import JsonResponse
-from datetime import date
+from datetime import date, datetime
 
 # Create your views here.
 
@@ -65,8 +65,26 @@ def altera_reserva(request):
       nome = request.GET.get('nomeReserva') 
       cpf = request.GET.get('cpfReserva')
       telefone = request.GET.get('telefoneReserva')
+      
       checkin = request.GET.get('checkinReserva')
+      checkin = datetime.strptime(checkin, "%Y-%m-%d")
+      
       checkout = request.GET.get('checkoutReserva')
+      checkout = datetime.strptime(checkout, "%Y-%m-%d")
+
+      reserva = Reserva.objects.get(id=id)
+
+      reserva.check_in = checkin
+      reserva.check_out = checkout
+      reserva.save()
+      
+      reserva = Reserva.objects.get(id=id)
+
+      diff = (reserva.check_out - reserva.check_in).days
+      reserva.diaria = diff
+      
+      reserva.total = round(reserva.diaria*reserva.num_quarto.preco, 2)
+      reserva.save()
 
       reserva = Reserva.objects.get(id=id)
       
@@ -74,22 +92,11 @@ def altera_reserva(request):
       reserva.id_hospede.cpf = cpf
       reserva.id_hospede.telefone = telefone
 
-      diff = (reserva.check_out - reserva.check_in).days
-      reserva.diaria = diff
+      # if checkout != None:
+      #    reserva.check_out = checkout
+
+      # reserva.check_in = checkin
       
-      reserva.save()
-
-      if checkout != None:
-         reserva.check_out = checkout
-
-      reserva.check_in = checkin
-      reserva.save()
-
-      reserva = Reserva.objects.get(id=id)
-      if reserva.check_out > date.today():
-         reserva.is_active = True
-      else:
-         reserva.is_active = False
       reserva.save()
 
       return JsonResponse({"success": True, "message": "Reserva alterada com sucesso!"})

@@ -93,7 +93,7 @@ def esqueci_senha(request):
                'Recuperação de senha',
                f'Use este link para redefinir sua senha: '
                f'http://127.0.0.1:8000/recuperar_senha/{token}/',
-               'seuemail@exemplo.com',
+               'gestoriihost@gmail.com',
                [email],
          )
          messages.success(request, 'E-mail enviado com sucesso.')

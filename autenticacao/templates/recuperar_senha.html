@@ -4,7 +4,7 @@
 <div style="background-image: url('{% static 'img/DEST_FRANCE.jpg' %}'); background-size: cover;">
    <br><br><br>
    <div class="align-items-center container-sm  w-50 d-flex justify-content-center pt-5">
-      <form class="form-control d-flex border-0 p-4 border-bottom border-top rounded" id="formRecuperarSenha" method="POST" action="{% url 'autenticacao:recuperar_senha' token=token %}" style="background-color: rgba(52, 52, 52, 0.193); backdrop-filter: blur(10px); color: white; width: 400px;">
+      <form class="form-control d-flex border-0 p-4 border-bottom border-top rounded" id="formRecuperarSenha" method="POST" action="{% url 'autenticacao:recuperar_senha' token=token%}" style="background-color: rgba(52, 52, 52, 0.193); backdrop-filter: blur(10px); color: white; width: 400px;">
          <div class="w-100 px-5 py-3 pb-5" >
             {% csrf_token %}
             <div class="p-3 form-group">

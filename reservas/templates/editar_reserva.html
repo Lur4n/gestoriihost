@@ -6,7 +6,15 @@
    <div class="row p-3 justify-content-center" data-id="{{reserva.id}}">
       <div class="col-9">
          <div class="row">
-            {{reserva.is_active}}
+            {% if reserva.is_active == True %}
+               <p class="display-5 font-weight-bold" style="font-size: 13pt;">
+                  Aberta 🟢
+               </p>
+            {% else %}
+               <p class="display-5 font-weight-bold" style="font-size: 13pt;">
+                  Fechada 🔴
+               </p>
+            {% endif %}
          </div>
          <div class="row">
             <div class="col-8">
