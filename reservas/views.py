@@ -30,7 +30,7 @@ def reservas(request):
    print(reserva_lista[1].check_in)
    # messages.warning(request, reserva_lista)
 
-   return render(request, 'reservas.html', {'reserva_lista': reserva_lista})
+   return render(request, 'reservas.html', {'reserva_lista': reserva_lista, 'total': reserva_lista.count()})
 
 
 
@@ -115,15 +115,22 @@ def fechar_reserva(request):
    if request.method == 'GET':
       id = request.GET.get('idReserva')
       print(id)
+      checkin = request.GET.get('checkinReserva')
+      checkout = request.GET.get('checkoutReserva')
       
       reserva = Reserva.objects.get(id=id)
       reserva.is_active = False
       reserva.check_out = date.today()
       reserva.diaria = (reserva.check_in - reserva.check_out).days
+      if reserva.diaria < 0:
+         reserva.diaria *= -1
 
       quarto = Quarto.objects.get(num_quarto=reserva.num_quarto.num_quarto)
       quarto.disponibilidade = 3
 
+      reserva.total = reserva.diaria * quarto.preco
+      if reserva.total < 0:
+         reserva.total *= -1
       quarto.save()
       reserva.save()
       return JsonResponse({"message" : "Apagou BLD"})

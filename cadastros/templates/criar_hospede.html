@@ -5,48 +5,35 @@
 <div class="container pt-4">
    <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Criar Hóspede</h3><hr> 
    <!-- Submenu -->
-   <div class="d-flex mt-4 mb-3">
-      <div class="col-6">
-         <h4 class="display-5" style="font-size: 18pt;">QTD Hospedes: 11</h4>
-      </div>
-   </div>
 
    <!-- Card de inserção na reserva -->
    
    <!-- <div class="d-flex border-top shadow border-2 border-primary pt-2 mb-5 rounded bg-body-tertiary"> -->
-   <div class="container border-top shadow border-2 border-warning pt-2 mb-5 rounded bg-body-tertiary">
-      <div class="row p-4">
+   <div class="container w-50 border-top shadow border-2 border-info mb-5 rounded bg-body-tertiary mt-5">
+      <div class="container w-75 px-5 py-4">
             <form action="{% url 'cadastros:criar_hospede' %}" method="POST">
                {% csrf_token %}
-               <div class="row">
-                  <div class="col-8">
-                     <label for="txtNome" class="form-label">Nome</label>
-                     <input class="form-control shadow" type="text" id="txtNome" name="txtNome" placeholder="Insira seu nome">
-                     <!-- <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div> -->
-                  </div>
-                  <div class=""></div>
+               <div class="form-group p-2">
+                  <label for="txtNome" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Nome: </label>
+                  <input class="form-control form-control-sm shadow" type="text" id="txtNome" name="txtNome" placeholder="Insira o nome">
                </div>
-               <div class="text-start form-group">
-                  <label for="txtNome" class="form-label">Nome</label>
-                  <input type="text" id="txtNome" name="txtNome" placeholder="Insira seu email">
-                  <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div>
-               </div>  
-               <div class="text-start form-group">
-                  <label for="txtCpf" class="form-label">CPF</label>
-                  <input type="text" id="txtCpf" name="txtCpf" placeholder="Insira seu cpf">
-                  <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div>
-               </div>  
-               <div class="text-start form-group">
-                  <label for="txtTelefone" class="form-label">Telefone</label>
-                  <input type="text" id="txtTelefone" name="txtTelefone" placeholder="Insira seu email">
-                  <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div>
-               </div>  
-               <div class="text-start form-group">
-                  <label for="txtEmpresa" class="form-label">Empresa</label>
-                  <input type="text" id="txtEmpresa" name="txtEmpresa" placeholder="Insira seu email">
-                  <div id="divEmailError" class="error-message mt-2 fade-in" style="font-size:10px; color:rgb(0, 217, 29);"> . </div>
+               <div class="form-group p-2">
+                  <label for="txtEmpresa" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Empresa:</label>
+                  <input class="form-control form-control-sm shadow" type="text" id="txtEmpresa" name="txtEmpresa" placeholder="Insira a empresa">
                </div>
-               <button type="submit" class="btn btn-primary w-100 gestorii-input shadow mt-2" >Salvar</button>
+               <div class="row form-group p-2">
+                  <div class="col">
+                     <label for="txtCpf" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">CPF:</label>
+                     <input class="form-control form-control-sm shadow" type="text" id="txtCpf" name="txtCpf" placeholder="Insira o cpf">
+                  </div> 
+                  <div class="col">
+                     <label for="txtTelefone" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Telefone:</label>
+                     <input class="form-control form-control-sm shadow" type="text" id="txtTelefone" name="txtTelefone" placeholder="Insira o telefone">
+                  </div> 
+               </div>
+               <div class="form-group p-2">
+                  <button type="submit" class="btn btn-primary btn-sm rounded w-100 shadow mt-3" >Salvar</button>
+               </div>
             </form>
       </div>
    </div>

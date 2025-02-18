@@ -87,13 +87,17 @@ def criar_reserva(request):
       diff = (check_out - check_in).days
       if diff < 0:
          diff = diff *-1
+
+      total = diff * quarto.preco
+
       reserva = Reserva(
          check_in = checkin,
          check_out = checkout,
          id_hospede = hospede,
          num_quarto = quarto,
          is_active = 1,
-         diaria = diff
+         diaria = diff,
+         total = total
       )
       
       quarto.disponibilidade = 2
@@ -103,7 +107,7 @@ def criar_reserva(request):
       messages.success(request, f'Reserva salva com sucesso')
       return redirect('reservas:reservas')
    
-   return render(request, 'criar_reserva.html', {'quartos': quartos})
+   return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count()})
 
 
 #-------------------- CRUD QUARTOS ------------------#
@@ -269,7 +273,7 @@ def editar_hospede(request):
          
 
    page_obj = paginator.get_page(page_number)
-
+   # tamListaHospedes = hospede.objects.count()
    return render(request, 'editar_hospede.html', {'hospedes': hospede, 'page_obj': page_obj})
 
 

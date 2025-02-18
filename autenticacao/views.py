@@ -107,6 +107,7 @@ def recuperar_senha(request, token):
    if request.method == 'POST':
       nova_senha = request.POST.get('senha')
       email = TOKENS.get(token)
+      print(email)
       if email:
          user = Usuario.objects.get(email=email)
          user.password = make_password(nova_senha)

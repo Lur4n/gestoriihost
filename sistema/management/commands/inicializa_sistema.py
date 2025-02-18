@@ -49,7 +49,7 @@ class Command(BaseCommand):
       else:
          self.stdout.write(self.style.WARNING("Usuário administrador já existe"))
          
-      #--------------------------------- GERADOR DE DADOS ALEATÓRIOS ----------------------------------------
+      # --------------------------------- GERADOR DE DADOS PSEUDO-ALEATÓRIOS -------------------------------------- #
 
       # Instancia o gerador de dados aleatórios
       fake = faker.Faker()
@@ -57,7 +57,7 @@ class Command(BaseCommand):
       # entao o campo de nome no modelo de hospedes, por exemplo, tem um
       # nome mais proximo do real, não uma sequencia de caracteres sem coerencia
 
-      # Criação de 30 hóspedes aleatórios
+      # ------------------------- Criação de 30 hóspedes aleatórios --------------------- #
       n_hosp = 30
       for _ in range(n_hosp):  # Insere 30 hóspedes
          # empresa aleatoria, ou nenhuma empresa
@@ -79,13 +79,13 @@ class Command(BaseCommand):
       self.stdout.write(self.style.SUCCESS(f"[{n_hosp}] Hóspedes aleatorizados criados"))
       
       
-      # Criação de 86 quartos aleatórios
+      # --------------------- Criação de 80 quartos aleatórios ----------------------- #
       n_quarto = 80
-      for i in range(n_quarto):  # Insere 86 quartos aleatórios
+      for i in range(n_quarto):  # Insere 80 quartos aleatórios
          num_quarto = i+1 #autoincrementando o quarto
          ranking = random.randint(1, 10) #aleatorizando o ranking
          descricao = f"Quarto {num_quarto} com características diversas." #padrao de descrição
-         preco = round(random.uniform(50.0, 500.0), 2) # aleatorizando os precos de 50 a 500
+         preco = round(random.uniform(100.0, 300.0), 2) # aleatorizando os precos de 100 a 300
          capacidade = random.randint(1, 4) # aleatorizando a capacidade
          disponibilidade = 1 # disponibilidade padrao, significa que o quarto esta livre
 
@@ -114,7 +114,7 @@ class Command(BaseCommand):
          quarto.disponibilidade = 3 # disp. =3 significa, manutenção
          quarto.save()# salvando a alteração do quarto
 
-      # Criação de 30 reservas aleatórias
+      # -------------------- Criação de 30 reservas aleatórias --------------------- #
       n_reservas = 30
       for _ in range(n_reservas):  # Insere 30 reservas
          hospede = random.choice(hospedes) # escolhendo hospedes aleatorios
@@ -136,7 +136,7 @@ class Command(BaseCommand):
             diaria = (check_out - check_in).days
 
             # Calcula o total da reserva
-            total = diaria * (check_out - check_in).days
+            total = diaria * quarto.preco
 
             # Quantidade de pessoas na reserva
             quant_pessoas = random.randint(1, 4)
@@ -157,6 +157,7 @@ class Command(BaseCommand):
             # editando os status de atividade da reserva
             if date.today() > check_out:
                reserva.is_active = False
+               quarto.disponibilidade = 3
 
             reserva.save()  # Salva a reserva no banco de dados
       

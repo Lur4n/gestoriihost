@@ -87,14 +87,14 @@
                         </div>
                         <div class="dropdown">
                            <li class="nav-item">
-                              <button class="btn btn-sm btn-dark  rounded dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Adm </button>
+                              <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 8px 18px 8px 18px; border-radius: 2px; background-color:rgb(30, 30, 30);color:white;">Adm </button>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                                  <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
                                  <li><a class="dropdown-item" href="#">Funcionários</a></li>
                                  <li><hr class="dropdown-divider"></li>
                                  <li class="dropdown-item text-end">
                                     <a  href="{% url 'autenticacao:logout' %}">
-                                       <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;" >Sair</button>
+                                       <button class="btn btn-sm btn-danger shadow" type="button" style="padding: 8px 18px 8px 18px; border-radius: 2px;color:white;">Sair</button>
                                     </a>
                                  </li>
                               </ul>
@@ -182,7 +182,7 @@
                     
         </div>
     </nav>
-   <div class="fade-in" id="minhaDiv">
+   <div class="fade-in " id="minhaDiv">
       {% block conteudo %}
       {% endblock %}
    </div>
