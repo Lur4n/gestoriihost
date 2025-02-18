@@ -68,19 +68,16 @@ def altera_reserva(request):
       checkin = request.GET.get('checkinReserva')
       checkout = request.GET.get('checkoutReserva')
 
-      print(nome)
-      print(cpf)
-      print(telefone)
-      print(checkin)
-      print(checkout)
-      
-
       reserva = Reserva.objects.get(id=id)
       
       reserva.id_hospede.nome = nome
       reserva.id_hospede.cpf = cpf
       reserva.id_hospede.telefone = telefone
-      reserva.id_hospede.save()
+
+      diff = (reserva.check_out - reserva.check_in).days
+      reserva.diaria = diff
+      
+      reserva.save()
 
       if checkout != None:
          reserva.check_out = checkout
@@ -126,6 +123,7 @@ def fechar_reserva(request):
       reserva = Reserva.objects.get(id=id)
       reserva.is_active = False
       reserva.check_out = date.today()
+      reserva.diaria = (reserva.check_in - reserva.check_out).days
 
       quarto = Quarto.objects.get(num_quarto=reserva.num_quarto.num_quarto)
       quarto.disponibilidade = 3

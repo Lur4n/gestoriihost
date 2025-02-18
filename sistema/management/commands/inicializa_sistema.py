@@ -128,11 +128,12 @@ class Command(BaseCommand):
             check_in = fake.date_this_year()
             check_out = check_in + timedelta(days=random.randint(1, 7))
             
-            # Valor da diária aleatório
-            diaria = random.randint(100, 500)
 
             # Gera observações aleatórias
             observacoes = fake.text(max_nb_chars=200)
+            
+            # Valor da diária aleatório
+            diaria = (check_out - check_in).days
 
             # Calcula o total da reserva
             total = diaria * (check_out - check_in).days
