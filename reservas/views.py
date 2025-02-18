@@ -25,7 +25,7 @@ def reservas(request):
 
 
    # Pegando todos os quartos
-   reserva_lista = Reserva.objects.all().order_by("-is_active", "num_quarto")
+   reserva_lista = Reserva.objects.all().order_by("-is_active", "-id")
    # reserva_lista.order_by("num_quarto")
    print(reserva_lista[1].check_in)
    # messages.warning(request, reserva_lista)
@@ -81,10 +81,6 @@ def altera_reserva(request):
 
       if checkout != None:
          reserva.check_out = checkout
-      # aux = date.today()
-      # if reserva.check_out > aux:
-
-      
 
       reserva.check_in = checkin
       reserva.save()
@@ -96,8 +92,8 @@ def altera_reserva(request):
          reserva.is_active = False
       reserva.save()
 
-      # return JsonResponse({"success": True, "message": "Reserva alterada com sucesso!"})
-      return JsonResponse({"message" : "Deu green"})
+      return JsonResponse({"success": True, "message": "Reserva alterada com sucesso!"})
+      # return JsonResponse({"message" : "Deu green"})
    return render(request, 'editar_reserva.html')
 
 def deleta_reserva(request):

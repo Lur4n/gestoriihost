@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 
 @login_required
@@ -79,18 +80,28 @@ def criar_reserva(request):
    
       hospede = Hospede.objects.get(cpf=cpf)
       quarto = Quarto.objects.get(num_quarto=num_quarto)
+      
+
+      check_out = datetime.strptime(checkout, '%Y-%m-%d')
+      check_in = datetime.strptime(checkin, '%Y-%m-%d')
+      diff = (check_out - check_in).days
+      if diff < 0:
+         diff = diff *-1
       reserva = Reserva(
          check_in = checkin,
          check_out = checkout,
          id_hospede = hospede,
          num_quarto = quarto,
-         is_active = 1
+         is_active = 1,
+         diaria = diff
       )
+      
       quarto.disponibilidade = 2
+
       quarto.save()
       reserva.save()
       messages.success(request, f'Reserva salva com sucesso')
-      return render(request, 'criar_reserva.html', {'quartos': quartos})
+      return redirect('reservas:reservas')
    
    return render(request, 'criar_reserva.html', {'quartos': quartos})
 
