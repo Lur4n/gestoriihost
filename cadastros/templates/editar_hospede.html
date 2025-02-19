@@ -34,7 +34,7 @@
                   <div class="container ">
                      <div class="row justify-content-center">
                         <div class="col-auto">
-                           <img class="apagar" src="{% static 'img/delete.png'%}" data-id="{{hospede.id}}" alt="" width="20px" onclick="confirmarExclusao()">
+                           <img class="apagar" src="{% static 'img/delete.png'%}" data-id="{{hospede.id}}" alt="" width="20px" onclick="confirmarExclusao({{hospede.id}}, '{{ hospede.nome | escapejs }}' )">
                         </div>
                         <div class="col-auto">
                            <img src="{% static 'img/update.png'%}" alt="" width="20px">
@@ -91,6 +91,43 @@
    </form>
 </div>
 <script>
+
+   function confirmarExclusao(id_hospede, nome_hospede) {
+      var hospedeRow = $(this).closest('tr'); // Pega a linha <tr> que contém o ícone
+      console.log("ID do hospede a ser excluído:", id_hospede);
+      console.log("NOME do hospede a ser excluído:", nome_hospede);
+
+         console.log("Passou aq------");
+         var resposta = confirm("Você tem certeza de que deseja excluir o hospede " + nome_hospede + "?");
+         if (resposta) {
+            console.log("FODASE------");
+            $.ajax({
+               url: '{% url "cadastros:apagar_hospede" %}', // URL para a view
+               method: 'GET',
+               data: {
+                     'id_hospede': id_hospede, // Passando o número do hospede
+                     'csrfmiddlewaretoken': '{{ csrf_token }}' // CSRF token para segurança
+               },
+               success: function(response) {
+                     console.log('hospede excluído com sucesso');
+                     toastr.success(response.message); // Mensagem de sucesso com toastr
+         
+                     // Remove a linha da tabela após a exclusão
+                     hospedeRow.remove(); 
+         
+                     // Recarrega a página para garantir a atualização (caso necessário)
+                     location.reload();
+               },
+               error: function() {
+                     toastr.error("Erro ao excluir o hospede. Tente novamente.");
+                     alert("Erro ao excluir o hospede. Tente novamente.");
+               }
+            });
+         } else {
+            alert("Exclusão cancelada.");
+         }
+      }
+
    $(document).ready(function () {
       function clickNoGrid(){
          $('.hospede_row').click(function(){
@@ -128,46 +165,6 @@
 
       clickNoEditar();
       clickNoGrid();
-      
-      function confirmarExclusao() {
-         $('.apagar').click(function() {
-            var hospedeRow = $(this).closest('tr'); // Pega a linha <tr> que contém o ícone
-            var id_hospede = $(this).data('id'); // Pega o número do hospede a ser excluído
-            console.log("ID do hospede a ser excluído:", id_hospede);
-
-            if (id_hospede) {
-                  var resposta = confirm("Você tem certeza de que deseja excluir o hospede " + num + "?");
-                  if (resposta) {
-                     $.ajax({
-                        url: '{% url "cadastros:apagar_hospede" %}', // URL para a view
-                        method: 'GET',
-                        data: {
-                              'id_hospede': id_hospede, // Passando o número do hospede
-                              'csrfmiddlewaretoken': '{{ csrf_token }}' // CSRF token para segurança
-                        },
-                        success: function(response) {
-                              console.log('hospede excluído com sucesso');
-                              toastr.success(response.message); // Mensagem de sucesso com toastr
-
-                              // Remove a linha da tabela após a exclusão
-                              hospedeRow.remove(); 
-
-                              // Recarrega a página para garantir a atualização (caso necessário)
-                              location.reload();
-                        },
-                        error: function() {
-                              toastr.error("Erro ao excluir o hospede. Tente novamente.");
-                              alert("Erro ao excluir o hospede. Tente novamente.");
-                        }
-                     });
-                  } else {
-                     alert("Exclusão cancelada.");
-                  }
-            }
-         });
-      }
-
-      confirmarExclusao();
       
    });
 

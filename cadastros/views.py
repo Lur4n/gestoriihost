@@ -119,7 +119,33 @@ def criar_quarto(request):
    if request.session.get('perfil_atual') not in {'Administrador'}:
       messages.error(request, "Você não é administrador!")
       return redirect('core:main')
-        
+   
+   if request.method == 'POST':
+      capacidade = request.POST.get('numCapacidade')
+      numero = request.POST.get('numNumero')
+      preco = request.POST.get('numPreco')
+      ranking = request.POST.get('numCapacidade')
+      disponibilidade = request.POST.get('numDisponibilidade')
+      descricao = request.POST.get('txtAreaDesc')
+
+      if not Quarto.objects.filter(num_quarto=numero).exists():
+            
+            quarto = Quarto(
+               num_quarto=numero,
+               ranking=ranking,
+               descricao=descricao,
+               preco=preco,
+               capacidade=capacidade,
+               disponibilidade=disponibilidade
+            )
+            quarto.save()
+            messages.success(request, 'Quarto salvo com sucesso!')
+            return redirect('cadastros:criar_quarto')
+      else:
+         messages.success(request, {'O número já esta sendo usado!'})
+
+      # messages.success(request, {'Cap':capacidade, 'num':numero, 'preco':preco, 'disponibilidade':disponibilidade, 'ranking':ranking, 'descricao':descricao})
+
    return render(request, 'criar_quarto.html')
 
 @login_required
@@ -287,9 +313,10 @@ def apagar_hospede(request):
    
    try:
       id_hospede = request.GET.get('id_hospede')
-      hospede = get_object_or_404(Hospede, id_hospede=id)
-      # hospede.delete()
+      hospede = get_object_or_404(Hospede, id=id_hospede)
+      hospede.delete()
       return JsonResponse({"message": "Hóspede apagado com sucesso!"})
+   
    except Exception as e:
       return JsonResponse({"error": str(e)}, status=500)
    
