@@ -5,34 +5,21 @@ from cadastros.models import Quarto, Usuario, Reserva, Hospede
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from datetime import date, datetime
-
-# Create your views here.
-
+@login_required
 def reservas(request):
-   # Pegando 1 quarto
+
    if request.method == 'POST':
-      num_quarto = request.POST.get('num_quarto')
-      reserva_unica = Reserva.objects.filter(num_quarto=num_quarto).order_by("-id")
+      num_quarto = request.POST.get('num_quarto')#associando o valor do input ao num_quarto la reservas.html
+      reserva_unica = Reserva.objects.filter(num_quarto=num_quarto).order_by("-id")#filtrando por quarto
       
-      if reserva_unica.exists():
-         # Caso exista uma reserva, mostra a mensagem de erro
+      if reserva_unica.exists():#se existir essa reserva unica
          messages.error(request, f"Reserva já existente para o quarto {num_quarto}.")
-         return render(request, 'reservas.html', {'reserva_lista': reserva_unica})
-      else:
-         # Caso não exista uma reserva, pode criar uma nova ou outra ação
+         return render(request, 'reservas.html', {'reserva_lista': reserva_unica})#renderiza a reserva.html com a {reserva_lista: reserva_unica}
+      else:#se nao 
          messages.success(request, f"Quarto {num_quarto} disponível para nova reserva.")
 
-
-
-   # Pegando todos os quartos
-   reserva_lista = Reserva.objects.all().order_by("-is_active", "-id")
-   # reserva_lista.order_by("num_quarto")
-   print(reserva_lista[1].check_in)
-   # messages.warning(request, reserva_lista)
-
+   reserva_lista = Reserva.objects.all().order_by("-is_active", "-id")#pega os quartos
    return render(request, 'reservas.html', {'reserva_lista': reserva_lista, 'total': reserva_lista.count()})
-
-
 
 def pesquisa_reserva(request):
    hospede_nome = request.GET.get('reserva_nome', '')

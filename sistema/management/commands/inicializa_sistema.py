@@ -73,7 +73,7 @@ class Command(BaseCommand):
       # --------------------------------- GERADOR DE DADOS PSEUDO-ALEATÓRIOS -------------------------------------- #
 
       # Instancia o gerador de dados aleatórios
-      fake = faker.Faker()
+      fake = faker.Faker('pt_BR')
       # O interessante dessa bib é que ela gera dados mais realistas, 
       # entao o campo de nome no modelo de hospedes, por exemplo, tem um
       # nome mais proximo do real, não uma sequencia de caracteres sem coerencia

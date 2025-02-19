@@ -9,44 +9,6 @@ from django.shortcuts import get_object_or_404
 from datetime import datetime
 
 
-@login_required
-def criar_hospede(request):
-   if request.method =='POST':
-      nome = request.POST.get('txtNome')
-      empresa = request.POST.get('txtEmpresa')
-      telefone = request.POST.get('txtTelefone')
-      cpf = request.POST.get('txtCpf')
-
-      hospede = Hospede(
-         nome=nome,
-         empresa=empresa,
-         telefone=telefone,
-         cpf=cpf
-      )
-      hospede.save()
-      messages.success(request, f'{nome} com sucesso')
-      return redirect('core:main')
-   return render(request, 'criar_hospede.html')
-
-def busca_hospede(request):
-   hospede_nome = request.GET.get('hospede_nome', '')
-   hospede_cpf = request.GET.get('hospede_cpf', '')
-   if hospede_nome:
-      hospedes = Hospede.objects.filter(nome__icontains=hospede_nome).values('nome', 'cpf','telefone', 'empresa')[:10]
-      print('Passou aq com: ', hospede_nome)
-      for hospede in hospedes:
-         print(hospede)
-   elif hospede_cpf:
-      hospedes = Hospede.objects.filter(cpf__icontains=hospede_cpf).values('nome', 'cpf', 'telefone', 'empresa')[:10]
-      print('Passou aq com: ', hospede_nome)
-      for hospede in hospedes:
-         print(hospede)
-   else:
-      hospedes = []
-      print("vazio")
-   return JsonResponse({'hospedes': list(hospedes)})
-
-
 #-------------- RESERVA ----------------------#
 @login_required
 def criar_reserva(request):
@@ -196,6 +158,8 @@ def editar_quarto(request):
          preco = request.POST.get('txtEditaPreco')
          capacidade = request.POST.get('txtEditaCapacidade')
          disponibilidade = request.POST.get('disponibilidade')
+         descricao = request.POST.get('txtEditaDescricao')
+
 
          try:
             quarto = Quarto.objects.get(num_quarto=num_quarto)
@@ -226,6 +190,10 @@ def editar_quarto(request):
          # Compara os valores atuais com os novos valores
          modificado = False
 
+         if quarto.descricao != descricao:
+            quarto.descricao = descricao
+            modificado = True
+
          if quarto.ranking != ranking:
             quarto.ranking = ranking
             modificado = True
@@ -248,9 +216,48 @@ def editar_quarto(request):
       else:
          messages.info(request, 'Selecione um quarto clicando sobre ele')
    page_obj = paginator.get_page(page_number)
-   return render(request, 'editar_quarto.html', {'quarto_lista': quartos, 'page_obj': page_obj})
+   return render(request, 'editar_quarto.html', {'quarto_lista': quartos, 'page_obj': page_obj, "qtdQuartos":quartos.count()})
 
 #------------------------- Hóspede --------------------------#
+
+@login_required
+def criar_hospede(request):
+   if request.method =='POST':
+      nome = request.POST.get('txtNome')
+      empresa = request.POST.get('txtEmpresa')
+      telefone = request.POST.get('txtTelefone')
+      cpf = request.POST.get('txtCpf')
+
+      hospede = Hospede(
+         nome=nome,
+         empresa=empresa,
+         telefone=telefone,
+         cpf=cpf
+      )
+      hospede.save()
+      messages.success(request, f'{nome} com sucesso')
+      return redirect('core:main')
+   return render(request, 'criar_hospede.html')
+
+def busca_hospede(request):
+   hospede_nome = request.GET.get('hospede_nome', '')
+   hospede_cpf = request.GET.get('hospede_cpf', '')
+   if hospede_nome:
+      hospedes = Hospede.objects.filter(nome__icontains=hospede_nome).values('nome', 'cpf','telefone', 'empresa')[:10]
+      print('Passou aq com: ', hospede_nome)
+      for hospede in hospedes:
+         print(hospede)
+   elif hospede_cpf:
+      hospedes = Hospede.objects.filter(cpf__icontains=hospede_cpf).values('nome', 'cpf', 'telefone', 'empresa')[:10]
+      print('Passou aq com: ', hospede_nome)
+      for hospede in hospedes:
+         print(hospede)
+   else:
+      hospedes = []
+      print("vazio")
+   return JsonResponse({'hospedes': list(hospedes)})
+
+
 
 def editar_hospede(request):
    if request.session.get('perfil_atual') not in {'Administrador'}:
@@ -260,6 +267,7 @@ def editar_hospede(request):
    hospede = Hospede.objects.all().order_by('-id')
    page_number = request.GET.get('page')
    paginator = Paginator(hospede, settings.NUMBER_GRID_PAGES) 
+   tamListaHospedes = Hospede.objects.count() 
    if request.method == 'POST':
       id = request.POST.get('id_hospede')
       nome = request.POST.get('txtEditaNome')
@@ -269,7 +277,7 @@ def editar_hospede(request):
 
       if id:
          try:
-            hospede = Hospede.objects.get(id=id)
+            hospede = Hospede.objects.get(id=id) 
             print("hospede: ", hospede)
          except Hospede.DoesNotExist:
             messages.error(request, f'Hospede com número {id} não encontrado.')
@@ -301,8 +309,7 @@ def editar_hospede(request):
          
 
    page_obj = paginator.get_page(page_number)
-   # tamListaHospedes = hospede.objects.count()
-   return render(request, 'editar_hospede.html', {'hospedes': hospede, 'page_obj': page_obj})
+   return render(request, 'editar_hospede.html', {'hospedes': hospede, 'page_obj': page_obj, 'qtdHospedes':tamListaHospedes})
 
 
 @login_required
@@ -319,7 +326,9 @@ def apagar_hospede(request):
    
    except Exception as e:
       return JsonResponse({"error": str(e)}, status=500)
-   
+
+
+
 def busca_hospede_id(request):
    # Verifica se o parâmetro 'num_hospede' foi fornecido
    num_hospede = request.GET.get('id_hospede', '')

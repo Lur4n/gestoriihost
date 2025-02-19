@@ -7,8 +7,10 @@
    <title>
       {% if request.session.perfil_atual == 'Administrador'%}
             Área do {{request.session.perfil_atual}}
-      {% else %}
+      {% elif request.session.perfil_atual == 'Funcionario' %}
             Área de{{request.session.perfil_atual}}
+      {% else %}
+            Login
       {% endif %}
    </title>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">

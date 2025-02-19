@@ -3,16 +3,20 @@
 {% block conteudo %}
 <div class="container pt-4">
    <!-- Titulo -->
-   <h3 class="display-5 font-weight-bold">Olá, {{ request.session.nome }}</h3><hr> 
+   <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Olá, {{ request.session.nome }}</h3><hr> 
 
 
    <div class="container">
       <div class="row mt-5 mb-5 ">
          <div class="d-flex justify-content-end">
-            <div class="col-1 ms-4 me-1 legenda-cartao-verde"></div>
+            <a href="{% url 'core:quartos_disponiveis'%}">
+               <div class="col-1 ms-4 me-1 legenda-cartao-verde"></div>
+            </a>
             <div class="col-auto">Disponivel</div>
 
-            <div class="col-1 ms-4 me-1 legenda-cartao-vermelho"></div>
+            <a href="{% url 'core:quartos_reservados'%}">
+               <div class="col-1 ms-4 me-1 legenda-cartao-vermelho"></div>
+            </a>
             <div class="col-auto ">Ocupado</div>
 
             <div class="col-1 ms-4 me-1 legenda-cartao-azul"></div>
