@@ -1,0 +1,54 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+<div class="container pt-4">
+   <!-- Titulo -->
+   <h3 class="display-5 font-weight-bold" style="font-size: 28pt;">Financeiro</h3><hr>
+
+   <!-- Menu -->
+   <div class="container-fluid mt-5 p-4">
+      <div class="row justify-content-center text-center">
+         <div class="col-6 col-sm-4 col-md-2 mb-3">
+            <a href="{% url 'financeiro:categoria' %}" class="nav-link">
+               <img id="cat" class="icones-menu mb-2 d-block mx-auto" src="{% static 'img/categoria.png'%}" alt="Categoria">
+               <label for="cat">Categorias</label>
+            </a>
+         </div>
+         <div class="col-6 col-sm-4 col-md-2 mb-3">
+            <a href="{% url 'financeiro:produto' %}" class="nav-link">
+               <img id="prod" class="icones-menu mb-2 d-block mx-auto" src="{% static 'img/produto.png'%}" alt="Produto">
+               <label for="prod">Produtos</label>
+            </a>
+         </div>
+         <div class="col-6 col-sm-4 col-md-2 mb-3">
+            <a href="{% url 'financeiro:estoque' %}" class="nav-link">
+               <img id="estoque" class="icones-menu mb-2 d-block mx-auto" src="{% static 'img/estoque.png'%}" alt="Estoque">
+               <label for="estoque">Estoque</label>
+            </a>
+         </div>
+         <div class="col-6 col-sm-4 col-md-2 mb-3">
+            <a href="{% url 'financeiro:venda' %}" class="nav-link">
+               <img id="venda" class="icones-menu mb-2 d-block mx-auto" src="{% static 'img/venda.png'%}" alt="Venda">
+               <label for="venda">Venda</label>
+            </a>
+         </div>
+         <div class="col-6 col-sm-4 col-md-2 mb-3">
+            <a href="{% url 'financeiro:caixa' %}" class="nav-link">
+               <img id="caixa" class="icones-menu mb-2 d-block mx-auto" src="{% static 'img/cofrinho.png'%}" alt="Caixa">
+               <label for="caixa">Caixa</label>
+            </a>
+         </div>
+      </div>
+   </div>
+
+   <!-- Visões Gerais -->
+   <div class="container-fluid mt-5 p-4 border bg-dark rounded text-white">
+      <h3 class="display-5 font-weight-bold text-center" style="font-size: 28pt;">Visões Gerais</h3><hr>
+      <p>
+         Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse architecto exercitationem dolore officia sapiente assumenda consectetur possimus necessitatibus neque corrupti! Maxime itaque voluptate eos nesciunt tempora dolorem voluptas reprehenderit excepturi.
+      </p>
+   </div>
+
+</div>
+{% endblock %}
+

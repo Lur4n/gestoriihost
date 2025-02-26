@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+<div class="container pt-4">
+   <!-- Titulo e Imagem da Categoria -->
+   <div class="d-flex flex-column flex-md-row justify-content-start align-items-center mb-4">
+      <h3 class="display-5 font-weight-bold" style="font-size: 28pt; margin-right: 15px;">Produtos</h3>
+      <img id="cat" class="icones-menu-titulo img-fluid" src="{% static 'img/produto.png'%}" alt="Categoria" style="max-width: 40px; height: auto;">
+   </div>
+   <hr>
+   <div class="container-fluid mt-5">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+         {% for produto in produtos %}
+         <div class="col">
+           <div class="card border-1">
+             <img src="{{ produto.imagem.url}}" class="border-top rounded border-info" alt="...">
+             <div class="card-body border-top border-info rounded" style="background-color: rgb(129, 182, 232); color: white;">
+               <p class="card-title display-1" style="font-size: x-large;">{{produto.nome}}</p>
+               <p class="card-title display-1" style="font-size: large;">{{produto.categoria}}</p>
+               <p class="card-title display-1" style="font-size: x-large;">R$ {{produto.preco}}</p>
+               <p class="card-text">{{produto.descricao}}</p>
+             </div>
+           </div>
+         </div>
+         {% endfor %}
+
+       </div>
+      <!-- <div class="row"> -->
+      <!-- </div> -->
+   </div>
+</div>
+{% endblock%}

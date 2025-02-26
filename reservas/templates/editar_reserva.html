@@ -4,7 +4,7 @@
 <div class="container-sm w-75 d-flex border-top shadow border-2 border-info px-4 mb-5 rounded bg-body-tertiary">
    <!-- Boladona -->
    <div class="row p-3 justify-content-center" data-id="{{reserva.id}}">
-      <div class="col-9">
+      <div class="col-12 col-sm-9 col-md-8">
          <div class="row">
             {% if reserva.is_active == True %}
                <p class="display-5 font-weight-bold" style="font-size: 13pt;">
@@ -17,78 +17,108 @@
             {% endif %}
          </div>
          <div class="row">
-            <div class="col-8">
-               <label for="txtNome_{{reserva.id}}" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Nome:</label>
+            <div class="col-12 col-sm-8">
+               <label for="txtNome_{{reserva.id}}" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Nome:</label>
                <input type="text" class="form-control form-control-sm shadow" id="txtNome_{{reserva.id}}"  value="{{reserva.id_hospede.nome}}">
             </div>
-            <div class="col-4">
-               <label for="id_{{reserva.id}}" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">ID Reserva:</label>
+            <div class="col-12 col-sm-4">
+               <label for="id_{{reserva.id}}" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">ID Reserva:</label>
                <input type="text" class="form-control form-control-sm shadow" id="id_{{reserva.id}}" readonly value="{{reserva.id}}">
             </div>
          </div>
          <div class="row">
-            <div class="col-6">
-               <label for="txtCpf_{{reserva.id}}" class="form-label mt-3 display-5 font-weight-bold" style="font-size: 11pt;">CPF::</label>
+            <div class="col-12 col-sm-6">
+               <label for="txtCpf_{{reserva.id}}" class="form-label mt-3 display-5 font-weight-bold" style="font-size: 12pt;">CPF:</label>
                <input type="text" class="form-control form-control-sm shadow" id="txtCpf_{{reserva.id}}" value="{{reserva.id_hospede.cpf}}">
             </div>
-            <div class="col-6">
-               <label for="txtTelefone_{{reserva.id}}" class="form-label mt-3 display-5 font-weight-bold" style="font-size: 11pt;">Telefone:</label>
+            <div class="col-12 col-sm-6">
+               <label for="txtTelefone_{{reserva.id}}" class="form-label mt-3 display-5 font-weight-bold" style="font-size: 12pt;">Telefone:</label>
                <input type="text" class="form-control form-control-sm shadow" id="txtTelefone_{{reserva.id}}" value="{{reserva.id_hospede.telefone}}">
             </div>
          </div>
          <div class="row mt-3">
-            <div class="col-3">
-               <label for="dateCheckin" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Check-in:</label>
+            <div class="col-12 col-sm-6 col-md-3">
+               <label for="dateCheckin" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Check-in:</label>
                <input name="txtCheckin" type="date" class="form-control form-control-sm shadow" id="txtCheckin_{{reserva.id}}" placeholder="Selecione uma data" value="{{reserva.check_in|date:'Y-m-d'}}">
             </div>
-            <div class="col-3">
-               <label for="dateCheckout" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Check-out:</label>
+            <div class="col-12 col-sm-6 col-md-3">
+               <label for="dateCheckout" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Check-out:</label>
                <input name="txtCheckout" type="date" class="form-control form-control-sm shadow" id="txtCheckout_{{reserva.id}}" placeholder="Selecione uma data" value="{{reserva.check_out|date:'Y-m-d'}}">
             </div>
-            <div class="col-3">
-               <label for="dateCheckout" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Valor do Quarto:</label>
+            <div class="col-12 col-sm-6 col-md-3">
+               <label for="txtCheckout" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Valor do Quarto:</label>
                <input name="txtCheckout" type="text" class="form-control form-control-sm shadow" id="txtCheckout_{{reserva.id}}" readonly placeholder="Selecione uma data" value="{{reserva.num_quarto.preco}}">
             </div>
-            <div class="col-1">
+            <div class="col-12 col-sm-6 col-md-3">
                {% if reserva.diaria > 1 %}
-               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Diárias:</label>
+               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Diárias:</label>
                {% else %}
-               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Diária:</label>
+               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Diária:</label>
                {% endif %}
                <input type="text" class="form-control text-center form-control-sm shadow" id="txtDiaria_{{reserva.id}}" value="{{reserva.diaria}}" readonly>
             </div>
-            <div class="col-2">
-               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 11pt;">Valor total:</label>
+            <div class="col-12 col-sm-6 col-md-2">
+               <label for="inputZip" class="form-label display-5 font-weight-bold" style="font-size: 12pt;">Valor total:</label>
                <input type="text" class="form-control text-center form-control-sm shadow" id="txtDiaria_{{reserva.id}}" value="{{reserva.total}}" readonly>
             </div>
-         </div>
-         <div class="row mt-3">
-            <div class="col-9 mt-3 ">
-               <button class="btn btn-info btn-sm" data-id="{{reserva.id}}" id="btnSalvar" hidden>Salvar Alterações</button>
-               <button class="btn btn-danger btn-sm" data-id="{{reserva.id}}" id="btnDeletar" onclick="deleta_reserva({{reserva.id}})">Deletar</button>
-               {% if reserva.is_active %}
+            <div class="col mt-3">
+               <div class="col-12 col-sm-9 mt-3 ">
+                  <button class="btn btn-info btn-sm" data-id="{{reserva.id}}" id="btnSalvar" hidden>Salvar Alterações</button>
+                  <button class="btn btn-danger btn-sm" data-id="{{reserva.id}}" id="btnDeletar" onclick="deleta_reserva({{reserva.id}})">Deletar</button>
+                  {% if reserva.is_active %}
                   <button class="btn btn-warning btn-sm" data-id="{{reserva.id}}" id="btnFechar" onclick="fechar_reserva({{reserva.id}})">Fechar Reserva</button>
-               {% endif %}
+                  {% endif %}
+               </div>
             </div>
          </div>
       </div>
-      <div class="col-3 pt-3">
+      <div class="col-12 col-sm-3 pt-3">
          <div class="row text-white rounded azul">
-            <h1 class="display-5 font-bold text-center display-5 font-weight-bold" style="font-size: 22pt;">Quarto: {{reserva.num_quarto.num_quarto}}</h1>
+            <h1 class="display-5 font-bold text-center display-5 font-weight-bold" style="font-size: 16pt;">Quarto: {{reserva.num_quarto.num_quarto}}</h1>
          </div>
          <hr>
          <div class="row text-white rounded azul">
-            <div class="container p-3 display-5 font-weight-bold" style="font-size: 11pt;">
-               <textfield>
-                  <legend>Observações</legend>
-                  {% comment %} <p class=" justify-content-center">{{reserva.observacoes}}</p> {% endcomment %}
-                  <p class=" justify-content-center">What is Lorem Ipsum?
-                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-               </textfield>
+            <div class="container p-3 display-5 font-weight-bold" style="font-size: 12pt;">
+               <legend>Observações</legend>
+               <p class=" justify-content-center">What is Lorem Ipsum?
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
             </div>
          </div>
       </div>
    </div>
 </div>
 {% endfor %}
+
+<!-- Media Queries para responsividade extra -->
+<style>
+   @media (max-width: 767px) {
+      .form-label {
+         font-size: 10pt !important;
+      }
+      .form-control-sm {
+         font-size: 10pt !important;
+      }
+      .btn-sm {
+         font-size: 10pt !important;
+         padding: 8px 12px !important;
+      }
+      .col-12 {
+         padding-left: 0 !important;
+         padding-right: 0 !important;
+      }
+   }
+
+   @media (max-width: 576px) {
+      .form-label {
+         font-size: 9pt !important;
+      }
+      .form-control-sm {
+         font-size: 9pt !important;
+      }
+      .btn-sm {
+         font-size: 9pt !important;
+         padding: 7px 10px !important;
+      }
+   }
+</style>

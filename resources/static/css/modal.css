@@ -1,0 +1,33 @@
+/* O Modal (inicialmente escondido) */
+.modal {
+   display: none; 
+   z-index: 1; 
+   background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo com transparência */
+   backdrop-filter: blur(2px);
+   height: 100vh;
+}
+
+/* O conteúdo do Modal */
+.modal-content {
+   margin: 1% auto;
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%;
+   max-width: 500px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* O botão de fechar (X) */
+.close {
+   color: #ff0303;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+}

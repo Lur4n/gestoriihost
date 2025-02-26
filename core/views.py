@@ -14,3 +14,7 @@ def quartos_reservados(request):
 def quartos_disponiveis(request):
    disponiveis = Quarto.objects.filter(disponibilidade=1)
    return render(request, "main.html", {'quarto_lista': disponiveis})
+
+def quartos_indisponiveis(request):
+   indisponiveis = Quarto.objects.filter(disponibilidade=3)
+   return render(request, "main.html", {'quarto_lista': indisponiveis})

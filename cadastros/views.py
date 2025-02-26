@@ -14,7 +14,15 @@ from datetime import datetime
 def criar_reserva(request):
 
    quartos = Quarto.objects.filter(disponibilidade=1).order_by('-ranking').values_list('num_quarto', flat = True)
+   quarto = Quarto.objects.filter(disponibilidade=1).order_by('-ranking').first()
 
+   if request.method =='GET':
+      if request.GET.get("num_quarto") is not None:
+         quarto_get = Quarto.objects.get(num_quarto=request.GET.get("num_quarto"))
+         if quarto != quarto_get:
+            return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count(), 'quarto_get': quarto_get, 'quarto': quarto, 'flag': False})  
+         messages.success(request, 'Ótima escolha de quarto')
+      return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count(), 'quarto': quarto, 'flag': True})
    if request.method =='POST':
       nome = request.POST.get('txtNomeReserva')
       empresa = request.POST.get('txtEmpresaReserva')
@@ -31,7 +39,7 @@ def criar_reserva(request):
 
       if (nome=="" or checkin=="" or cpf=="" or num_quarto==""):
          messages.error(request, f'O Nome, Checkin e CPF São Obrigatorios')
-         return render(request, 'criar_reserva.html', {'quartos': quartos})
+         return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count(), 'quarto': quarto, 'flag': True})
       
       if not Hospede.objects.filter(cpf=cpf).exists():
          hospede = Hospede(
@@ -70,8 +78,10 @@ def criar_reserva(request):
       reserva.save()
       messages.success(request, f'Reserva salva com sucesso')
       return redirect('reservas:reservas')
+   print(quarto)
    
-   return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count()})
+   
+   return render(request, 'criar_reserva.html', {'quartos': quartos, 'total': quartos.count(), 'quarto': quarto, 'flag': True})
 
 
 #-------------------- CRUD QUARTOS ------------------#

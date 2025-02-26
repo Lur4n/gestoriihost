@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from cadastros.models import Perfil, Quarto, Hospede, Reserva
+from financeiro.models import Categoria, Produto
 import random
 from datetime import timedelta, date
 import faker  # Biblioteca para gerar dados aleatórios realistas
@@ -137,6 +138,7 @@ class Command(BaseCommand):
 
       # -------------------- Criação de 30 reservas aleatórias --------------------- #
       n_reservas = 30
+      quartos = Quarto.objects.filter(disponibilidade=1) # pegando todos os quartos disponiveis
       for _ in range(n_reservas):  # Insere 30 reservas
          hospede = random.choice(hospedes) # escolhendo hospedes aleatorios
          quarto = random.choice(quartos) # escolhendo quartos aleatorios
@@ -179,8 +181,51 @@ class Command(BaseCommand):
             if date.today() > check_out:
                reserva.is_active = False
                quarto.disponibilidade = 3
+               quarto.save()
+            if date.today() > check_out + timedelta(days=3):
+               reserva.is_active = False
+               quarto.disponibilidade = 1
+               quarto.save()
 
             reserva.save()  # Salva a reserva no banco de dados
       
       self.stdout.write(self.style.SUCCESS(f"[{n_reservas}] Reservas aleatorizadas criadas"))
 
+      # -------------------------------------- Financeiro ( ͡° ͜ʖ ͡°) --------------------------------------- #
+      
+      # Criação de 3 categorias #
+      nome = "Barzinho"
+      categoria = Categoria(nome=nome)
+      categoria.save()
+      nome = "Papelaria"
+      categoria = Categoria(nome=nome)
+      categoria.save()
+      nome = "Limpeza"
+      categoria = Categoria(nome=nome)
+      categoria.save()
+      self.stdout.write(self.style.SUCCESS(f"[{3}] Categorias criadas"))
+
+      # Criacao de 3 produtos #
+      nome = "Água 500ml s/gás"
+      preco = 2.50
+      descricao = "Garrafa de água mineral sem gás"
+      categoria = Categoria.objects.get(nome="Barzinho")
+      imagem = "agua.png"
+      produto = Produto(nome=nome, preco=preco, categoria=categoria, descricao=descricao, imagem=imagem)
+      produto.save()
+      nome = "Coca Cola 600ml"
+      preco = 5.50
+      descricao = "Refrigerante de cola"
+      categoria = Categoria.objects.get(nome="Barzinho")
+      imagem = "coca.png"
+      produto = Produto(nome=nome, preco=preco, categoria=categoria, descricao=descricao, imagem=imagem)
+      produto.save()
+      nome = "Lápis preto"
+      preco = 1.50
+      descricao = "Lápis preto comum"
+      categoria = Categoria.objects.get(nome="Papelaria")
+      imagem = "lapis.png"
+      produto = Produto(nome=nome, preco=preco, categoria=categoria, descricao=descricao, imagem=imagem)
+      produto.save()
+      
+      self.stdout.write(self.style.SUCCESS(f"[{3}] Produtos criados"))

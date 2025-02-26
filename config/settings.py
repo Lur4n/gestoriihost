@@ -15,23 +15,25 @@ SECRET_KEY = "django-insecure-zjv+iqw$i=l$1r^2x&6quhazt#3g0o!a4$nh)eifd!%3r*pfn7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Adicionando o ip da minha máquina para habilitar o acesso pelo smartphone
+ALLOWED_HOSTS = ['192.168.4.106', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "autenticacao",
-    "core",
-    "cadastros",
-    "sistema",
-    "reservas",
+   "django.contrib.admin",
+   'django.contrib.auth',
+   'django.contrib.contenttypes',
+   "django.contrib.sessions",
+   "django.contrib.messages",
+   "django.contrib.staticfiles",
+   "autenticacao",
+   "core",
+   "cadastros",
+   "sistema",
+   "reservas",
+   "financeiro",
 ]
 
 MIDDLEWARE = [
@@ -152,6 +154,12 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "resources/static/"),
 ]
+
+# Arquivos de midia 
+# Configuração de arquivos de mídia
+MEDIA_URL = '/media/'  # URL para acessar os arquivos de mídia
+MEDIA_ROOT = os.path.join(BASE_DIR, 'resources', 'media')  # Diretório onde os arquivos de mídia serão armazenados
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

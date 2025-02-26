@@ -1,0 +1,12 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block conteudo %}
+<div class="container pt-4">
+   <!-- Titulo e Imagem da Categoria -->
+   <div class="d-flex flex-column flex-md-row justify-content-start align-items-center mb-4">
+      <h3 class="display-5 font-weight-bold" style="font-size: 28pt; margin-right: 15px;">Estoque</h3>
+      <img id="cat" class="icones-menu-titulo img-fluid" src="{% static 'img/estoque.png'%}" alt="Categoria" style="max-width: 40px; height: auto;">
+   </div>
+   <hr>
+</div>
+{% endblock%}
